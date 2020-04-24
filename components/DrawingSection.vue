@@ -76,8 +76,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { fabric } from 'fabric'
-import * as crypto from '~/utils/crypto'
-import socket from '~/utils/io'
 
 const brushSizeWidth = {
   small: 5,
@@ -87,11 +85,7 @@ const brushSizeWidth = {
 
 export default Vue.extend({
   props: {
-    encryptionKey: {
-      type: String,
-      required: true,
-    },
-    room: {
+    value: {
       type: String,
       required: true,
     },
@@ -108,6 +102,16 @@ export default Vue.extend({
     }
   },
 
+  watch: {
+    value(canvas: string): void {
+      if (this.fabric) {
+        this.loadingCanvasState = true
+        this.fabric.loadFromJSON(canvas, () => {})
+        this.loadingCanvasState = false
+      }
+    },
+  },
+
   mounted() {
     // window.addEventListener('resize', this.handleResize)
     this.canvas = this.$refs.canvas as HTMLCanvasElement
@@ -117,12 +121,7 @@ export default Vue.extend({
     this.fabric.isDrawingMode = true
     this.fabric.freeDrawingBrush.color = this.brushColor
     this.fabric.freeDrawingBrush.width = brushSizeWidth[this.brushSize]
-    this.fabric.on('after:render', this.sendCanvasState)
-
-    socket.on('new-user', this.newUserInRoom)
-    socket.on('new-canvas-state', this.receiveCanvasState)
-
-    this.joinRoom()
+    this.fabric.on('after:render', this.canvasChangedEvent)
   },
 
   methods: {
@@ -178,34 +177,9 @@ export default Vue.extend({
       }
     },
 
-    joinRoom(): void {
-      socket.emit('join-room', this.room)
-    },
-
-    newUserInRoom(_: string): void {
-      this.sendCanvasState()
-    },
-
-    sendCanvasState(): void {
+    canvasChangedEvent(): void {
       if (this.fabric && !this.loadingCanvasState) {
-        const canvasState = JSON.stringify(this.fabric)
-        const encryptedCanvasState = crypto.encrypt(
-          canvasState,
-          this.encryptionKey
-        )
-        socket.emit('send-canvas-state', this.room, encryptedCanvasState)
-      }
-    },
-
-    receiveCanvasState(encryptedCanvasState: any): void {
-      if (this.fabric) {
-        this.loadingCanvasState = true
-        const canvasState = crypto.decrypt(
-          encryptedCanvasState,
-          this.encryptionKey
-        )
-        this.fabric.loadFromJSON(canvasState, () => {})
-        this.loadingCanvasState = false
+        this.$emit('input', JSON.stringify(this.fabric))
       }
     },
   },
