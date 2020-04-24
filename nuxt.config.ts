@@ -15,6 +15,7 @@ const appColor = appCommon.color
 const baseUrl = process.env.BASE_URL || ''
 const baseProtocol = process.env.BASE_PROTOCOL || 'https'
 const staticPrefix = process.env.STATIC_PREFIX || ''
+const wsUrl = process.env.WS_URL || ''
 const chiffrePublicKey = process.env.CHIFFRE_PUBLIC_KEY || ''
 const chiffreProjectId = process.env.CHIFFRE_PROJECT_ID || ''
 const sentryDsn = process.env.SENTRY_DSN || ''
@@ -30,6 +31,7 @@ const config: Configuration = {
   env: {
     APP_VERSION: appVersion,
     STATIC_PREFIX: staticPrefix,
+    WS_URL: wsUrl,
   },
 
   loading: { color: '#fff' },
