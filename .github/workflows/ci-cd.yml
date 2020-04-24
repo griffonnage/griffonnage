@@ -1,0 +1,144 @@
+name: CI/CD
+
+on: [push]
+
+env:
+  NODE_VERSION: '12.16.1'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+      - name: Install dependencies
+        run: npm install
+      - name: Check dependencies
+        run: npm audit --production
+      - name: Check code lint
+        run: npm run lint
+      # - name: Run tests
+      #   run: npm run test:ci
+      # - name: Publish code coverage to Codecov
+      #   uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+
+  build-preview:
+    name: Build Preview
+    needs: test
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'master')
+
+    env:
+      BASE_PROTOCOL: ${{ secrets.BASE_PROTOCOL }}
+      BASE_URL: ${{ secrets.BASE_URL_PREVIEW }}
+      WS_URL: ${{ secrets.WS_URL_PREVIEW }}
+      CHIFFRE_PUBLIC_KEY: ""
+      CHIFFRE_PROJECT_ID: ""
+      SENTRY_DSN: ""
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        run: npm install
+      - name: Build package
+        run: npm run generate
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: build-preview
+          path: dist
+
+  build-production:
+    name: Build Production
+    needs: test
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'tags')
+
+    env:
+      BASE_PROTOCOL: ${{ secrets.BASE_PROTOCOL }}
+      BASE_URL: ${{ secrets.BASE_URL }}
+      WS_URL: ${{ secrets.WS_URL }}
+      CHIFFRE_PUBLIC_KEY: ${{ secrets.CHIFFRE_PUBLIC_KEY }}
+      CHIFFRE_PROJECT_ID: ${{ secrets.CHIFFRE_PROJECT_ID }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache Node.js modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+      - name: Install Dependencies
+        run: npm install
+      - name: Build package
+        run: npm run generate
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: build-production
+          path: dist
+
+  deploy-preview:
+    name: Deploy Preview
+    needs: build-preview
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'master')
+
+    env:
+      NOW_ORG_ID: ${{ secrets.NOW_ORG_ID }}
+      NOW_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
+      NOW_TOKEN: ${{ secrets.NOW_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: build-preview
+          path: dist
+      - name: Deploy to Zeit Now
+        run: cd dist && now --confirm --token $NOW_TOKEN
+
+  deploy-production:
+    name: Deploy Production
+    needs: build-production
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'tags')
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download build artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: build-production
+          path: dist
+      - name: Deploy to Zeit Now
+        run: cd dist && now --prod --confirm --token $NOW_TOKEN
