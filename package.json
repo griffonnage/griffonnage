@@ -46,6 +46,8 @@
     "nuxt-i18n": "^6.9.1",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1",
     "vue-swatches": "^2.0.1",
     "vuelidate": "^0.7.5"
   },

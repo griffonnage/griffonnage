@@ -20,6 +20,7 @@
                     localePath({
                       name: 'free-id',
                       params: { id: generateRoomId() },
+                      hash: `#${generateSecretKey()}`,
                     })
                   "
                   tag="nuxt-link"
@@ -37,11 +38,16 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import * as crypto from '~/utils/crypto'
 
 export default Vue.extend({
   methods: {
     generateRoomId(): string {
       return Math.random().toString(20).substr(2, 10)
+    },
+
+    generateSecretKey(): string {
+      return crypto.generateKey()
     },
   },
 })

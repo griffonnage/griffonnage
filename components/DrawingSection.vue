@@ -76,6 +76,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { fabric } from 'fabric'
+import * as crypto from '~/utils/crypto'
 import socket from '~/utils/io'
 
 const brushSizeWidth = {
@@ -86,6 +87,10 @@ const brushSizeWidth = {
 
 export default Vue.extend({
   props: {
+    encryptionKey: {
+      type: String,
+      required: true,
+    },
     room: {
       type: String,
       required: true,
@@ -184,13 +189,21 @@ export default Vue.extend({
     sendCanvasState(): void {
       if (this.fabric && !this.loadingCanvasState) {
         const canvasState = JSON.stringify(this.fabric)
-        socket.emit('send-canvas-state', this.room, canvasState)
+        const encryptedCanvasState = crypto.encrypt(
+          canvasState,
+          this.encryptionKey
+        )
+        socket.emit('send-canvas-state', this.room, encryptedCanvasState)
       }
     },
 
-    receiveCanvasState(canvasState: any): void {
+    receiveCanvasState(encryptedCanvasState: any): void {
       if (this.fabric) {
         this.loadingCanvasState = true
+        const canvasState = crypto.decrypt(
+          encryptedCanvasState,
+          this.encryptionKey
+        )
         this.fabric.loadFromJSON(canvasState, () => {})
         this.loadingCanvasState = false
       }

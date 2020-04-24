@@ -5,7 +5,7 @@
         <div class="container">
           <div class="columns">
             <div class="column is-half is-offset-one-quarter">
-              <drawing-section :room="room" />
+              <drawing-section :encryption-key="encryptionKey" :room="room" />
             </div>
           </div>
         </div>
@@ -24,9 +24,21 @@ export default Vue.extend({
   },
 
   asyncData({ route }) {
-    const room = route.params.id
     return {
-      room,
+      room: route.params.id,
+    }
+  },
+
+  data() {
+    return {
+      encryptionKey: '',
+    }
+  },
+
+  mounted() {
+    const hash = this.$route.hash
+    if (hash.length > 1) {
+      this.encryptionKey = hash.slice(1)
     }
   },
 })
