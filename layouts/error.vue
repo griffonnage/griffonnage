@@ -2,13 +2,13 @@
   <section class="hero is-fullheight-with-navbar">
     <div class="hero-body">
       <div class="container has-text-centered">
-        <div v-if="statusCode === 404">
+        <div>
           <p class="title">
-            {{ $t('error.pageNotFound.title') }}
+            {{ description.title }}
           </p>
 
           <p class="subtitle">
-            {{ $t('error.pageNotFound.subtitle') }}
+            {{ description.subtitle }}
           </p>
         </div>
 
@@ -39,6 +39,15 @@ export default Vue.extend({
   computed: {
     statusCode(): number {
       return this.error.statusCode || 500
+    },
+
+    description(): any | undefined {
+      const handlers = new Map([
+        [404, this.$t('error.pageNotFound')],
+        [500, this.$t('error.internalServerError')],
+      ])
+
+      return handlers.get(this.statusCode)
     },
   },
 

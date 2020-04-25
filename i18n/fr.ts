@@ -9,6 +9,18 @@ export default {
     version: 'Version',
   },
 
+  error: {
+    pageNotFound: {
+      title: 'Page introuvable',
+      subtitle: 'Il semblerait que vous soyez perdu !',
+    },
+    internalServerError: {
+      title: 'Une erreur est survenue',
+      subtitle: `Nous sommes en train d'enquêter ...`,
+    },
+    backToHome: `Retour à l'accueil`,
+  },
+
   home: {
     title: 'Griffonnage',
     subtitle: 'Gribouillez des dessins rapidement avec vos amis, en privé',

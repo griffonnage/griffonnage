@@ -9,6 +9,18 @@ export default {
     version: 'Version',
   },
 
+  error: {
+    pageNotFound: {
+      title: 'Page not found',
+      subtitle: 'It seems you are lost!',
+    },
+    internalServerError: {
+      title: 'Something went wrong',
+      subtitle: 'We are investigating...',
+    },
+    backToHome: 'Back to home',
+  },
+
   home: {
     title: 'Griffonnage',
     subtitle: 'Scribbl careless drawings with friends, privately',
