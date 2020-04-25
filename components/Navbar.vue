@@ -42,18 +42,5 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend({
-  data() {
-    return {
-      terminalMode: this.$i18n.locale === 'und',
-    }
-  },
-
-  methods: {
-    setTerminalMode(value: boolean): void {
-      const locale = value ? 'und' : (this.$i18n.defaultLocale as string)
-      this.$router.replace(this.switchLocalePath(locale))
-    },
-  },
-})
+export default Vue.extend({})
 </script>

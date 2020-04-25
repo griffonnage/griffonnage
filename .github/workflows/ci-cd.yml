@@ -29,8 +29,8 @@ jobs:
         run: npm audit --production
       - name: Check code lint
         run: npm run lint
-      # - name: Run tests
-      #   run: npm run test:ci
+      - name: Run tests
+        run: npm run test:ci
       # - name: Publish code coverage to Codecov
       #   uses: codecov/codecov-action@v1
       #   with:

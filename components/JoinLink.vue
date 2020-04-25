@@ -38,6 +38,7 @@ export default Vue.extend({
         message: this.$t('rooms.linkCopied') as string,
         type: 'is-success',
       })
+      this.$emit('clipboard-link', this.value)
     },
   },
 })
