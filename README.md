@@ -1,6 +1,6 @@
 # Griffonnage
 
-> Scribbl careless drawings with friends, privately
+> Scribble careless drawings with friends, privately
 
 Griffonnage allows private synchronized drawings with friends.
 

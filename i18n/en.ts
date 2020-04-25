@@ -34,7 +34,7 @@ export default {
 
   home: {
     title: 'Griffonnage',
-    subtitle: 'Scribbl careless drawings with friends, privately',
+    subtitle: 'Scribble careless drawings with friends, privately',
     drawFreely: 'Draw freely',
   },
 

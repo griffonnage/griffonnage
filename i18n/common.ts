@@ -2,10 +2,11 @@ export default {
   app: {
     name: 'Griffonnage',
     shortName: 'Griffonnage',
-    description: 'Scribbl careless drawings with friends, privately',
+    description: 'Scribble careless drawings with friends, privately',
     keywords: [
       'griffonnage',
-      'scribbl',
+      'gribouillis',
+      'scribble',
       'drawing',
       'game',
       'guess',
