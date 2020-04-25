@@ -74,13 +74,44 @@ describe('components/chat', () => {
     })
   })
 
-  it('can send new message', async () => {
+  it('can send a new message with return key', async () => {
     const props = generateProps()
     const wrapper = createWrapper(Chat, props)
 
     const newMessage = faker.lorem.sentence()
-    const nameInput = wrapper.find('input')
-    nameInput.setValue(newMessage)
+    const input = wrapper.find('input')
+    input.setValue(newMessage)
+    await flushPromises()
+
+    input.trigger('keyup.enter')
+    await flushPromises()
+
+    expect(wrapper.emitted('new-message')?.length).toBe(1)
+    expect(wrapper.emitted('new-message')?.[0][0]).toEqual(newMessage)
+  })
+
+  it('cannot send an empty message with return key', async () => {
+    const props = generateProps()
+    const wrapper = createWrapper(Chat, props)
+
+    const newMessage = ''
+    const input = wrapper.find('input')
+    input.setValue(newMessage)
+    await flushPromises()
+
+    input.trigger('keyup.enter')
+    await flushPromises()
+
+    expect(wrapper.emitted('new-message')).toBeFalsy()
+  })
+
+  it('can send a new message with button', async () => {
+    const props = generateProps()
+    const wrapper = createWrapper(Chat, props)
+
+    const newMessage = faker.lorem.sentence()
+    const input = wrapper.find('input')
+    input.setValue(newMessage)
 
     const button = wrapper.find('button')
     expect(button.attributes('disabled')).toBe('disabled')
@@ -93,16 +124,16 @@ describe('components/chat', () => {
     expect(button.attributes('disabled')).toBe('disabled')
 
     expect(wrapper.emitted('new-message')?.length).toBe(1)
-    expect(wrapper.emitted('new-message')?.[0]).toStrictEqual([newMessage])
+    expect(wrapper.emitted('new-message')?.[0][0]).toEqual(newMessage)
   })
 
-  it('cannot send empty message', async () => {
+  it('cannot send an empty message with button', async () => {
     const props = generateProps()
     const wrapper = createWrapper(Chat, props)
 
     const newMessage = ''
-    const nameInput = wrapper.find('input')
-    nameInput.setValue(newMessage)
+    const input = wrapper.find('input')
+    input.setValue(newMessage)
 
     const button = wrapper.find('button')
     expect(button.attributes('disabled')).toBe('disabled')

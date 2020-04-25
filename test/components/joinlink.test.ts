@@ -53,6 +53,6 @@ describe('components/join-link', () => {
     await flushPromises()
 
     expect(wrapper.emitted('clipboard-link')?.length).toBe(1)
-    expect(wrapper.emitted('clipboard-link')?.[0]).toStrictEqual([props.value])
+    expect(wrapper.emitted('clipboard-link')?.[0][0]).toEqual(props.value)
   })
 })

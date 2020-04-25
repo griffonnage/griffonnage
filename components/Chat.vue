@@ -8,6 +8,7 @@
         icon-pack="fas"
         icon="paper-plane"
         expanded
+        @keyup.native.enter="send"
       />
       <p class="control">
         <button
@@ -59,8 +60,10 @@ export default Vue.extend({
 
   methods: {
     send(): void {
-      this.$emit('new-message', this.newMessage)
-      this.newMessage = ''
+      if (this.newMessage !== '') {
+        this.$emit('new-message', this.newMessage)
+        this.newMessage = ''
+      }
     },
   },
 })
