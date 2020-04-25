@@ -6,6 +6,17 @@ export default {
   },
 
   credits: {
+    made: 'Developed by {author}',
+    powered: 'Powered by {nuxt}, {socketio}, {bulma} and {fontawesome}',
+    e2ee: 'All data are end-to-end encrypted with {tweetnacljs}',
+    analytics: 'Privacy-first analytics tracking powered by {chiffre}',
+    website: 'This website is open-source software under {license} license',
+    copyright: {
+      text: 'Copyright',
+      start: '2020',
+      end: 'present',
+      owner: 'Romain Clement',
+    },
     version: 'Version',
   },
 
