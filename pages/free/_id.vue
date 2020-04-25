@@ -5,16 +5,7 @@
         <div class="container">
           <div class="columns">
             <div class="column is-one-fifth">
-              <b-field>
-                <b-input
-                  v-model="username"
-                  :placeholder="$t('rooms.username')"
-                  :maxlength="20"
-                  :has-counter="true"
-                  @input="sayHi"
-                />
-              </b-field>
-              <user-list v-model="users" />
+              <user-list :users="users" @username-changed="updateUsername" />
             </div>
 
             <div class="column is-three-fifths">
@@ -34,18 +25,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import UserList from '~/components/UserList.vue'
+import UserList, { User } from '~/components/UserList.vue'
 import JoinLink from '~/components/JoinLink.vue'
 import DrawingSection from '~/components/DrawingSection.vue'
 import Chat from '~/components/Chat.vue'
-import * as usernames from '~/utils/usernames'
 import * as io from '~/utils/io'
-
-interface User {
-  socketid: string
-  username?: string
-  me: boolean
-}
 
 interface ChatMessage {
   socketid: string
@@ -81,7 +65,7 @@ export default Vue.extend({
       socket: undefined as io.Socket | undefined,
       users: [] as User[],
       canvas: '',
-      username: usernames.generate(),
+      username: '',
       chatMessages: [] as ChatMessage[],
     }
   },
@@ -102,6 +86,11 @@ export default Vue.extend({
   },
 
   methods: {
+    updateUsername(username: string): void {
+      this.username = username
+      this.sayHi()
+    },
+
     sayHi(): void {
       const hiData = {
         kind: 'hi',

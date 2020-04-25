@@ -41,7 +41,6 @@ export default {
   rooms: {
     secureLink: 'This connection is secured using end-to-end encryption',
     linkCopied: 'Link copied to clipboard',
-    username: 'Username',
   },
 
   chat: {
@@ -50,6 +49,7 @@ export default {
   },
 
   userlist: {
+    username: 'Username',
     me: 'Me',
     anonymous: 'Anonymous User',
   },

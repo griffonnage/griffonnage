@@ -41,7 +41,6 @@ export default {
   rooms: {
     secureLink: 'Cette connection est sécurisé par chiffrement bout-en-bout',
     linkCopied: 'Lien copié dans le presse-papier',
-    username: `Nom d'utilisateur`,
   },
 
   chat: {
@@ -50,6 +49,7 @@ export default {
   },
 
   userlist: {
+    username: `Nom d'utilisateur`,
     me: 'Moi',
     anonymous: 'Utilisateur Anonyme',
   },

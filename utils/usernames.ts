@@ -1,6 +1,7 @@
 const adjectives = [
   'Amazing',
   'Angry',
+  'Arrogant',
   'Awesome',
   'Bad',
   'Beautiful',
@@ -24,12 +25,14 @@ const adjectives = [
   'Hardcore',
   'Hungry',
   'Horny',
+  'Isolated',
   'Lightning',
   'Magical',
   'Magnificient',
   'Playful',
   'Political',
   'Sad',
+  'Selfish',
   'Sexy',
   'Sloppy',
   'Smelly',
@@ -66,7 +69,7 @@ function randNumber(min: number, max: number): number {
 }
 
 export function generate(): string {
-  const adjectiveIndex = randNumber(0, adjectives.length + 1)
-  const nameIndex = randNumber(0, names.length + 1)
+  const adjectiveIndex = randNumber(0, adjectives.length)
+  const nameIndex = randNumber(0, names.length)
   return `${adjectives[adjectiveIndex]} ${names[nameIndex]}`
 }
