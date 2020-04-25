@@ -9,7 +9,7 @@
                 <b-input
                   v-model="username"
                   :placeholder="$t('rooms.username')"
-                  :maxlength="50"
+                  :maxlength="20"
                   :has-counter="true"
                   @input="sayHi"
                 />
