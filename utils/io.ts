@@ -4,16 +4,19 @@ import * as crypto from '~/utils/crypto'
 const wsUrl = process.env.WS_URL || ''
 
 export type Socket = SocketIOClient.Socket
+export type UserListHandler = (socketids: string[]) => void
 export type UserHandler = (socketid: string) => void
 export type DataHandler = (data: any) => void
 
 export function createSocket(
+  userListHandler: UserListHandler,
   userJoinHandler: UserHandler,
   userLeaveHandler: UserHandler,
   dataHandler: DataHandler,
   encryptionKey: string
 ): Socket {
   const socket = io(wsUrl)
+  socket.on('user-list', userListHandler)
   socket.on('user-join', userJoinHandler)
   socket.on('user-leave', userLeaveHandler)
   socket.on('new-room-data', newRoomData(dataHandler, encryptionKey))

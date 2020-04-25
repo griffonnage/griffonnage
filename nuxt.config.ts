@@ -30,6 +30,7 @@ const config: Configuration = {
 
   env: {
     APP_VERSION: appVersion,
+    HOSTNAME: hostname,
     STATIC_PREFIX: staticPrefix,
     WS_URL: wsUrl,
   },
@@ -56,7 +57,7 @@ const config: Configuration = {
     fallback: '200.html',
   },
 
-  plugins: ['~/plugins/font-awesome.ts'],
+  plugins: ['~/plugins/clipboard.ts', '~/plugins/font-awesome.ts'],
 
   buildModules: [
     '@nuxtjs/dotenv',

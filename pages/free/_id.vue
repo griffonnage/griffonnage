@@ -4,7 +4,11 @@
       <div class="hero-body">
         <div class="container">
           <div class="columns">
-            <div class="column is-half is-offset-one-quarter">
+            <div class="column is-one-fifth">
+              <user-list v-model="users" />
+            </div>
+            <div class="column is-three-fifths">
+              <join-link v-model="link" />
               <drawing-section v-model="canvas" @input="shareCanvas" />
             </div>
           </div>
@@ -16,11 +20,21 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import UserList from '~/components/UserList.vue'
+import JoinLink from '~/components/JoinLink.vue'
 import DrawingSection from '~/components/DrawingSection.vue'
 import * as io from '~/utils/io'
 
+interface User {
+  socketid: string
+  username?: string
+  me: boolean
+}
+
 export default Vue.extend({
   components: {
+    UserList,
+    JoinLink,
     DrawingSection,
   },
 
@@ -32,9 +46,11 @@ export default Vue.extend({
 
   data() {
     return {
+      link: `${process.env.HOSTNAME}${this.$route.fullPath}`,
       room: '',
       encryptionKey: '',
       socket: undefined as io.Socket | undefined,
+      users: [] as User[],
       canvas: '',
     }
   },
@@ -87,6 +103,7 @@ export default Vue.extend({
 
     joinRoom(): void {
       this.socket = io.createSocket(
+        this.userListHandler,
         this.userJoinHandler,
         this.userLeaveHandler,
         this.roomDataHandler,
@@ -102,16 +119,22 @@ export default Vue.extend({
       }
     },
 
-    browserClose(event: Event): null {
+    browserClose(_: Event): void {
       this.leaveRoom()
-      event.returnValue = false
-      return null
     },
 
     sendRoomData(data: any): void {
       if (this.socket) {
         io.broadcastRoomData(this.socket, this.room, data, this.encryptionKey)
       }
+    },
+
+    userListHandler(socketsids: string[]): void {
+      this.users = socketsids.map((s) => ({
+        socketid: s,
+        username: '',
+        me: this.socket?.id === s,
+      }))
     },
 
     userJoinHandler(_: string): void {

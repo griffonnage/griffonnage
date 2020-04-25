@@ -7,7 +7,10 @@ import {
   faCircleNotch,
   faCode,
   faDotCircle,
+  faLock,
   faPencilAlt,
+  faShareAlt,
+  faUserShield,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -20,7 +23,10 @@ library.add(
   faCircleNotch,
   faCode,
   faDotCircle,
+  faLock,
   faPencilAlt,
+  faShareAlt,
+  faUserShield,
   faVectorSquare,
   faGithub
 )
