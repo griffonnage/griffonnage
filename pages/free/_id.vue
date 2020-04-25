@@ -16,9 +16,14 @@
               </b-field>
               <user-list v-model="users" />
             </div>
+
             <div class="column is-three-fifths">
               <join-link v-model="link" />
               <drawing-section v-model="canvas" @input="shareCanvas" />
+            </div>
+
+            <div class="column is-one-fifth">
+              <chat :messages="chatMessages" @new-message="sendChatMessage" />
             </div>
           </div>
         </div>
@@ -32,12 +37,21 @@ import Vue from 'vue'
 import UserList from '~/components/UserList.vue'
 import JoinLink from '~/components/JoinLink.vue'
 import DrawingSection from '~/components/DrawingSection.vue'
+import Chat from '~/components/Chat.vue'
+import * as usernames from '~/utils/usernames'
 import * as io from '~/utils/io'
 
 interface User {
   socketid: string
   username?: string
   me: boolean
+}
+
+interface ChatMessage {
+  socketid: string
+  username: string
+  content: string
+  datetime: Date
 }
 
 interface Data {
@@ -50,6 +64,7 @@ export default Vue.extend({
     UserList,
     JoinLink,
     DrawingSection,
+    Chat,
   },
 
   asyncData({ route }) {
@@ -66,7 +81,8 @@ export default Vue.extend({
       socket: undefined as io.Socket | undefined,
       users: [] as User[],
       canvas: '',
-      username: '',
+      username: usernames.generate(),
+      chatMessages: [] as ChatMessage[],
     }
   },
 
@@ -99,13 +115,28 @@ export default Vue.extend({
     },
 
     shareCanvas(): void {
-      this.sendRoomData({
+      const canvasData = {
         kind: 'canvas',
         message: {
           socketid: this.socket?.id,
           canvas: this.canvas,
         },
-      })
+      }
+      this.sendRoomData(canvasData)
+    },
+
+    sendChatMessage(newMessage: string): void {
+      const chatMessageData = {
+        kind: 'chat-message',
+        message: {
+          socketid: this.socket?.id,
+          username: this.username,
+          content: newMessage,
+          datetime: new Date().toISOString(),
+        },
+      }
+      this.sendRoomData(chatMessageData)
+      this.handleChatMessage(chatMessageData)
     },
 
     joinRoom(): void {
@@ -155,6 +186,7 @@ export default Vue.extend({
       const handlers = new Map([
         ['hi', this.handleHiData],
         ['canvas', this.handleCanvasData],
+        ['chat-message', this.handleChatMessage],
       ])
 
       const hd = handlers.get(data.kind)
@@ -174,6 +206,10 @@ export default Vue.extend({
 
     handleCanvasData(data: Data): void {
       this.canvas = data.message.canvas
+    },
+
+    handleChatMessage(data: Data): void {
+      this.chatMessages.unshift(data.message)
     },
   },
 })

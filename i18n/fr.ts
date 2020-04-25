@@ -44,6 +44,11 @@ export default {
     username: `Nom d'utilisateur`,
   },
 
+  chat: {
+    newMessage: 'Message',
+    send: 'Envoyer',
+  },
+
   userlist: {
     me: 'Moi',
     anonymous: 'Utilisateur Anonyme',
