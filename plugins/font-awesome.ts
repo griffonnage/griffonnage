@@ -10,6 +10,7 @@ import {
   faLock,
   faPencilAlt,
   faShareAlt,
+  faUserSecret,
   faUserShield,
   faVectorSquare,
 } from '@fortawesome/free-solid-svg-icons'
@@ -26,6 +27,7 @@ library.add(
   faLock,
   faPencilAlt,
   faShareAlt,
+  faUserSecret,
   faUserShield,
   faVectorSquare,
   faGithub

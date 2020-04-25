@@ -5,6 +5,15 @@
         <div class="container">
           <div class="columns">
             <div class="column is-one-fifth">
+              <b-field>
+                <b-input
+                  v-model="username"
+                  :placeholder="$t('rooms.username')"
+                  :maxlength="50"
+                  :has-counter="true"
+                  @input="sayHi"
+                />
+              </b-field>
               <user-list v-model="users" />
             </div>
             <div class="column is-three-fifths">
@@ -31,6 +40,11 @@ interface User {
   me: boolean
 }
 
+interface Data {
+  kind: string
+  message: any
+}
+
 export default Vue.extend({
   components: {
     UserList,
@@ -52,6 +66,7 @@ export default Vue.extend({
       socket: undefined as io.Socket | undefined,
       users: [] as User[],
       canvas: '',
+      username: '',
     }
   },
 
@@ -71,24 +86,16 @@ export default Vue.extend({
   },
 
   methods: {
-    sayHi(username: string): void {
-      this.sendRoomData({
+    sayHi(): void {
+      const hiData = {
         kind: 'hi',
         message: {
           socketid: this.socket?.id,
-          username,
+          username: this.username,
         },
-      })
-    },
-
-    sayBye(username: string): void {
-      this.sendRoomData({
-        kind: 'bye',
-        message: {
-          socketid: this.socket?.id,
-          username,
-        },
-      })
+      }
+      this.sendRoomData(hiData)
+      this.handleHiData(hiData)
     },
 
     shareCanvas(): void {
@@ -135,6 +142,7 @@ export default Vue.extend({
         username: '',
         me: this.socket?.id === s,
       }))
+      this.sayHi()
     },
 
     userJoinHandler(_: string): void {
@@ -143,13 +151,28 @@ export default Vue.extend({
 
     userLeaveHandler(_: string): void {},
 
-    roomDataHandler(data: any): void {
-      if (data.kind === 'canvas') {
-        return this.handleCanvasData(data)
+    roomDataHandler(data: Data): void {
+      const handlers = new Map([
+        ['hi', this.handleHiData],
+        ['canvas', this.handleCanvasData],
+      ])
+
+      const hd = handlers.get(data.kind)
+
+      if (hd) {
+        hd(data)
       }
     },
 
-    handleCanvasData(data: any): void {
+    handleHiData(data: Data): void {
+      this.users.forEach((u) => {
+        if (u.socketid === data.message.socketid) {
+          u.username = data.message.username
+        }
+      })
+    },
+
+    handleCanvasData(data: Data): void {
       this.canvas = data.message.canvas
     },
   },
