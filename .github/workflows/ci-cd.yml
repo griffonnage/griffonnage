@@ -133,6 +133,11 @@ jobs:
     runs-on: ubuntu-latest
     if: contains(github.ref, 'tags')
 
+    env:
+      NOW_ORG_ID: ${{ secrets.NOW_ORG_ID }}
+      NOW_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
+      NOW_TOKEN: ${{ secrets.NOW_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
       - name: Download build artifacts
