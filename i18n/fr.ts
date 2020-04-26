@@ -36,6 +36,15 @@ export default {
     title: 'Griffonnage',
     subtitle: 'Gribouillez des dessins rapidement avec vos amis, en privé',
     drawFreely: 'Dessiner librement',
+    bs: `Griffonnage permet de dessiner avec ses amis réellement en privé.
+    Tous les dessins et messages instantanés sont envoyés chiffrés bout-en-bout
+    en pair-à-pair, ce qui veut dire qu'aucun serveur ne retient d'information ni
+    même ne peut voir vos données lors du transport.`,
+    moto: `Vous ne nous croyez-pas ? Aucun problème ! Nous croyons fortement que la transparence
+    va de pair avec le respect de la vie privée, c'est pourquoi cette application est
+    un logiciel libre et ouvert sous license {license}, disponible publiquement sur {repository}.`,
+    tagline: `La seule honte que vous aurez en dessin le dessin le plus osbscène
+    jamais réalisé sera uniquement entre vous et vos amis. 😏`,
   },
 
   rooms: {

@@ -14,6 +14,7 @@ function createWrapper(component: Vue.VueConstructor<Vue>) {
 
   const stubs = {
     NuxtLink: RouterLinkStub,
+    i18n: true,
   }
 
   return mount(component, {
