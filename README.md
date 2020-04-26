@@ -2,10 +2,26 @@
 
 > Scribble careless drawings with friends, privately
 
-Griffonnage allows private synchronized drawings with friends.
+[![GitHub Tag](https://img.shields.io/github/tag/griffonnage/web.svg)](https://github.com/griffonnage/web/releases/latest)
+[![GitHub Action CI/CD](https://github.com/griffonnage/web/workflows/CI/CD/badge.svg)](https://github.com/griffonnage/web/actions?query=workflow%3A%22CI%2FCD%22)
+[![Coverage Status](https://img.shields.io/codecov/c/github/griffonnage/web)](https://codecov.io/gh/griffonnage/web)
 
-Built using [Nuxt.js](https://nuxtjs.org), [Fabric.js](),
-[Socket-io](https://socket.io) and [TweetNaCl.js](https://tweetnacl.js.org).
+Griffonnage allows truly private synchronized drawings with friends.
+All the drawings and chat messages are sent end-to-end encrypted in a
+peer-to-peer fashion, meaning no server whatsoever does not retain nor
+can see your data in transit.
+
+The only shame you get from drawing the most obscene stuff ever is between
+you and your friends only.
+
+Built using the following open-source projects:
+
+- [Nuxt.js](https://nuxtjs.org)
+- [Fabric.js](http://fabricjs.com/)
+- [Socket-io](https://socket.io)
+- [TweetNaCl.js](https://tweetnacl.js.org)
+- [Bulma](https://bulma.io)
+- [FontAwesome](https://fontawesome.com)
 
 ## Build Setup
 
@@ -31,7 +47,7 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 This project has been greatly inspired by:
 
 - [Excalidraw](https://excalidraw.com): end-to-end encrypted drawings
-- [Skribbl](https://skribbl.io): drawing with friends to guess words
+- [Skribbl](https://skribbl.io): drawing with friends to guess words (within an ocean of advertisements)
 - The COVID-19 home confinement
 
 ## License
