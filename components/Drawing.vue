@@ -12,6 +12,7 @@
             icon-left="broom"
             size="is-large"
             type="is-danger"
+            data-control-clear
             @click="clearCanvas"
           />
 
@@ -21,6 +22,7 @@
             size="is-large"
             type="is-info"
             :disabled="!freeDrawing"
+            data-control-selection
             @click="disableFreeDrawing"
           />
 
@@ -30,6 +32,7 @@
             size="is-large"
             type="is-info"
             :disabled="freeDrawing"
+            data-control-drawing
             @click="enableFreeDrawing"
           />
         </div>
@@ -43,6 +46,7 @@
             size="is-large"
             type="is-warning"
             :disabled="brushSize === 'small'"
+            data-brush-small
             @click="brushSizeChanged('small')"
           />
 
@@ -52,6 +56,7 @@
             size="is-large"
             type="is-warning"
             :disabled="brushSize === 'medium'"
+            data-brush-medium
             @click="brushSizeChanged('medium')"
           />
 
@@ -61,6 +66,7 @@
             size="is-large"
             type="is-warning"
             :disabled="brushSize === 'large'"
+            data-brush-large
             @click="brushSizeChanged('large')"
           />
         </div>
