@@ -40,7 +40,7 @@ interface ChatMessage {
 
 interface Data {
   kind: string
-  message: any
+  payload: any
 }
 
 export default Vue.extend({
@@ -94,7 +94,7 @@ export default Vue.extend({
     sayHi(): void {
       const hiData = {
         kind: 'hi',
-        message: {
+        payload: {
           socketid: this.socket?.id,
           username: this.username,
         },
@@ -106,7 +106,7 @@ export default Vue.extend({
     shareCanvas(): void {
       const canvasData = {
         kind: 'canvas',
-        message: {
+        payload: {
           socketid: this.socket?.id,
           canvas: this.canvas,
         },
@@ -117,7 +117,7 @@ export default Vue.extend({
     sendChatMessage(newMessage: string): void {
       const chatMessageData = {
         kind: 'chat-message',
-        message: {
+        payload: {
           socketid: this.socket?.id,
           username: this.username,
           content: newMessage,
@@ -187,18 +187,18 @@ export default Vue.extend({
 
     handleHiData(data: Data): void {
       this.users.forEach((u) => {
-        if (u.socketid === data.message.socketid) {
-          u.username = data.message.username
+        if (u.socketid === data.payload.socketid) {
+          u.username = data.payload.username
         }
       })
     },
 
     handleCanvasData(data: Data): void {
-      this.canvas = data.message.canvas
+      this.canvas = data.payload.canvas
     },
 
     handleChatMessage(data: Data): void {
-      this.chatMessages.unshift(data.message)
+      this.chatMessages.unshift(data.payload)
     },
   },
 })
