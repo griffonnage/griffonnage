@@ -62,15 +62,18 @@ describe('components/drawing', () => {
     const props = generateProps()
     const wrapper = createWrapper(Drawing, props)
 
+    const cut = wrapper.find('button[data-control-cut]')
     const selection = wrapper.find('button[data-control-selection]')
     const drawing = wrapper.find('button[data-control-drawing]')
 
+    expect(cut.attributes('disabled')).toBe('disabled')
     expect(selection.attributes('disabled')).toBeUndefined()
     expect(drawing.attributes('disabled')).toBe('disabled')
 
     selection.trigger('click')
     await flushPromises()
 
+    expect(cut.attributes('disabled')).toBeUndefined()
     expect(selection.attributes('disabled')).toBe('disabled')
     expect(drawing.attributes('disabled')).toBeUndefined()
   })
@@ -167,13 +170,17 @@ describe('components/drawing', () => {
     expect(wrapper.emitted('input')).toBeFalsy()
   })
 
-  it('can update canvas on mousedown', async () => {
+  it('can update canvas on mouse click', async () => {
     const props = generateProps()
     const wrapper = createWrapper(Drawing, props)
 
-    const canvas = wrapper.find('div .canvas-container')
-    canvas.trigger('mousedown')
+    const canvas = wrapper.find('canvas')
 
+    canvas.trigger('click', {
+      button: 0,
+      clientX: 1,
+      clientY: 1,
+    })
     await flushPromises()
 
     setTimeout(() => {

@@ -18,6 +18,16 @@
 
           <b-button
             icon-pack="fas"
+            icon-left="cut"
+            size="is-large"
+            type="is-warning"
+            :disabled="freeDrawing"
+            data-control-cut
+            @click="cutSelection"
+          />
+
+          <b-button
+            icon-pack="fas"
             icon-left="vector-square"
             size="is-large"
             type="is-info"
@@ -44,7 +54,7 @@
             icon-pack="fas"
             icon-left="circle-notch"
             size="is-large"
-            type="is-warning"
+            type="is-dark"
             :disabled="brushSize === 'small'"
             data-brush-small
             @click="brushSizeChanged('small')"
@@ -54,7 +64,7 @@
             icon-pack="fas"
             icon-left="dot-circle"
             size="is-large"
-            type="is-warning"
+            type="is-dark"
             :disabled="brushSize === 'medium'"
             data-brush-medium
             @click="brushSizeChanged('medium')"
@@ -64,7 +74,7 @@
             icon-pack="fas"
             icon-left="circle"
             size="is-large"
-            type="is-warning"
+            type="is-dark"
             :disabled="brushSize === 'large'"
             data-brush-large
             @click="brushSizeChanged('large')"
@@ -127,7 +137,10 @@ export default Vue.extend({
     this.fabric.isDrawingMode = true
     this.fabric.freeDrawingBrush.color = this.brushColor
     this.fabric.freeDrawingBrush.width = brushSizeWidth[this.brushSize]
-    this.fabric.on('after:render', this.canvasChangedEvent)
+    this.fabric.on('object:added', this.canvasChangedEvent)
+    this.fabric.on('object:modified', this.canvasChangedEvent)
+    this.fabric.on('object:removed', this.canvasChangedEvent)
+    this.fabric.on('canvas:cleared', this.canvasChangedEvent)
   },
 
   methods: {
@@ -152,6 +165,17 @@ export default Vue.extend({
     clearCanvas(): void {
       if (this.fabric) {
         this.fabric.clear()
+      }
+    },
+
+    cutSelection(): void {
+      if (this.fabric && !this.freeDrawing) {
+        const objects = this.fabric.getActiveObjects()
+        objects.forEach((o) => {
+          if (this.fabric) {
+            this.fabric.remove(o)
+          }
+        })
       }
     },
 
