@@ -10,7 +10,7 @@
 
             <div class="column is-three-fifths">
               <join-link v-model="link" />
-              <drawing-section v-model="canvas" @input="shareCanvas" />
+              <drawing v-model="canvas" @input="shareCanvas" />
             </div>
 
             <div class="column is-one-fifth">
@@ -27,7 +27,7 @@
 import Vue from 'vue'
 import UserList, { User } from '~/components/UserList.vue'
 import JoinLink from '~/components/JoinLink.vue'
-import DrawingSection from '~/components/DrawingSection.vue'
+import Drawing from '~/components/Drawing.vue'
 import Chat from '~/components/Chat.vue'
 import * as io from '~/utils/io'
 
@@ -47,7 +47,7 @@ export default Vue.extend({
   components: {
     UserList,
     JoinLink,
-    DrawingSection,
+    Drawing,
     Chat,
   },
 
