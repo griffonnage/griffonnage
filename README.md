@@ -11,8 +11,8 @@ All the drawings and chat messages are sent end-to-end encrypted in a
 peer-to-peer fashion, meaning no server whatsoever does not retain nor
 can see your data in transit.
 
-The only shame you get from drawing the most obscene stuff ever is between
-you and your friends only.
+The only shame you'll get from drawing the most obscene stuff ever
+will be between you and your friends only. 😏
 
 Built using the following open-source projects:
 

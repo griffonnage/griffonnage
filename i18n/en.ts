@@ -43,8 +43,8 @@ export default {
     moto: `Don't believe us? No biggy! We strongly believe transparency goes hand-in-hand
     with privacy, that's why this application is free and open-source software under
     {license} license, available publicly on {repository}.`,
-    tagline: `The only shame you get from drawing the most obscene stuff ever
-    is between you and your friends only. 😏`,
+    tagline: `The only shame you'll get from drawing the most obscene stuff ever
+    will be between you and your friends only. 😏`,
   },
 
   rooms: {

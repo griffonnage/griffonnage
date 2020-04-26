@@ -43,8 +43,8 @@ export default {
     moto: `Vous ne nous croyez-pas ? Aucun problème ! Nous croyons fortement que la transparence
     va de pair avec le respect de la vie privée, c'est pourquoi cette application est
     un logiciel libre et ouvert sous license {license}, disponible publiquement sur {repository}.`,
-    tagline: `La seule honte que vous aurez en dessin le dessin le plus osbscène
-    jamais réalisé sera uniquement entre vous et vos amis. 😏`,
+    tagline: `La seule honte que vous aurez en dessinant la chose la plus osbscène possible
+    sera uniquement entre vous et vos amis. 😏`,
   },
 
   rooms: {
