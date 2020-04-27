@@ -15,6 +15,7 @@ module.exports = {
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
     '<rootDir>/store/**/*.ts',
+    '<rootDir>/utils/**/*.ts',
   ],
   setupFiles: ['jest-canvas-mock'],
 }
