@@ -34,6 +34,10 @@ export default {
       name: 'Nuxt.js',
       url: 'https://nuxtjs.org',
     },
+    fabricjs: {
+      name: 'Fabric.js',
+      url: 'https://fabricjs.com',
+    },
     socketio: {
       name: 'Socket.IO',
       url: 'https://socket.io',

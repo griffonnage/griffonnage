@@ -16,6 +16,12 @@
           </a>
         </template>
 
+        <template v-slot:fabricjs>
+          <a :href="fabricjs.url" :title="fabricjs.name" :alt="fabricjs.name">
+            <span>{{ fabricjs.name }}</span>
+          </a>
+        </template>
+
         <template v-slot:socketio>
           <a :href="socketio.url" :title="socketio.name" :alt="socketio.name">
             <span>{{ socketio.name }}</span>
@@ -101,6 +107,7 @@ export default Vue.extend({
       repository: this.$t('common.app.repository'),
       license: this.$t('common.app.license'),
       nuxt: this.$t('common.links.nuxt'),
+      fabricjs: this.$t('common.links.fabricjs'),
       socketio: this.$t('common.links.socketio'),
       bulma: this.$t('common.links.bulma'),
       fontawesome: this.$t('common.links.fontawesome'),

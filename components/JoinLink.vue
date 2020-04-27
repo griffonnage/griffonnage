@@ -3,7 +3,12 @@
     <p class="control">
       <b-tooltip :label="$t('rooms.secureLink')" type="is-dark">
         <span class="button is-static">
-          <b-icon pack="fas" icon="lock" type="is-success" size="is-small" />
+          <b-icon
+            pack="fas"
+            icon="shield-alt"
+            type="is-success"
+            size="is-small"
+          />
         </span>
       </b-tooltip>
     </p>

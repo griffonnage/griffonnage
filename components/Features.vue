@@ -1,0 +1,203 @@
+<template>
+  <section class="section hero is-fullheight has-background-light">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon pack="fas" icon="pencil-alt" size="is-medium" />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.drawing.title') }}
+                </p>
+
+                <i18n path="features.drawing.text" tag="p">
+                  <template v-slot:fabricjs>
+                    <a
+                      :href="fabricjs.url"
+                      :title="fabricjs.name"
+                      :alt="fabricjs.name"
+                    >
+                      <span>{{ fabricjs.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon pack="fas" icon="comments" size="is-medium" />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.messaging.title') }}
+                </p>
+
+                <i18n path="features.messaging.text" tag="p">
+                  <template v-slot:socketio>
+                    <a
+                      :href="socketio.url"
+                      :title="socketio.name"
+                      :alt="socketio.name"
+                    >
+                      <span>{{ socketio.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon pack="fas" icon="users" size="is-medium" />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.p2p.title') }}
+                </p>
+
+                <i18n path="features.p2p.text" tag="p">
+                  <template v-slot:socketio>
+                    <a
+                      :href="socketio.url"
+                      :title="socketio.name"
+                      :alt="socketio.name"
+                    >
+                      <span>{{ socketio.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="columns">
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon pack="fas" icon="shield-alt" size="is-medium" />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.privacy.title') }}
+                </p>
+
+                <i18n path="features.privacy.text" tag="p">
+                  <template v-slot:tweetnacljs>
+                    <a
+                      :href="tweetnacljs.url"
+                      :title="tweetnacljs.name"
+                      :alt="tweetnacljs.name"
+                    >
+                      <span>{{ tweetnacljs.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon pack="fas" icon="lock-open" size="is-medium" />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.oss.title') }}
+                </p>
+
+                <i18n path="features.oss.text" tag="p">
+                  <template v-slot:license>
+                    <a
+                      :href="license.url"
+                      :title="license.name"
+                      :alt="license.name"
+                    >
+                      <span>{{ license.name }}</span>
+                    </a>
+                  </template>
+
+                  <template v-slot:repository>
+                    <a
+                      :href="repository.url"
+                      :title="repository.name"
+                      :alt="repository.name"
+                    >
+                      <span>{{ repository.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+
+          <div class="column is-one-third">
+            <article class="media">
+              <figure class="media-left">
+                <p>
+                  <b-icon
+                    pack="fas"
+                    icon="envelope-open-text"
+                    size="is-medium"
+                  />
+                </p>
+              </figure>
+              <div class="media-content">
+                <p class="is-size-4 has-text-weight-bold">
+                  {{ $t('features.suggestions.title') }}
+                </p>
+
+                <i18n path="features.suggestions.text" tag="p">
+                  <template v-slot:repository>
+                    <a
+                      :href="repository.url"
+                      :title="repository.name"
+                      :alt="repository.name"
+                    >
+                      <span>{{ repository.name }}</span>
+                    </a>
+                  </template>
+                </i18n>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  data() {
+    return {
+      license: this.$t('common.app.license'),
+      repository: this.$t('common.app.repository'),
+      fabricjs: this.$t('common.links.fabricjs'),
+      socketio: this.$t('common.links.socketio'),
+      tweetnacljs: this.$t('common.links.tweetnacljs'),
+    }
+  },
+})
+</script>

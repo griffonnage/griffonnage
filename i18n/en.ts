@@ -7,7 +7,8 @@ export default {
 
   credits: {
     made: 'Developed by {author}',
-    powered: 'Powered by {nuxt}, {socketio}, {bulma} and {fontawesome}',
+    powered:
+      'Powered by {nuxt}, {fabricjs}, {socketio}, {bulma} and {fontawesome}',
     e2ee: 'All data are end-to-end encrypted with {tweetnacljs}',
     analytics: 'Privacy-first analytics tracking powered by {chiffre}',
     website: 'This website is open-source software under {license} license',
@@ -36,15 +37,43 @@ export default {
     title: 'Griffonnage',
     subtitle: 'Scribble careless drawings with friends, privately',
     drawFreely: 'Draw freely',
-    bs: `Griffonnage allows truly private synchronized drawings with friends.
-    All the drawings and chat messages are sent end-to-end encrypted in a
-    peer-to-peer fashion, meaning no server whatsoever does not retain nor
-    can see your data in transit.`,
-    moto: `Don't believe us? No biggy! We strongly believe transparency goes hand-in-hand
-    with privacy, that's why this application is free and open-source software under
-    {license} license, available publicly on {repository}.`,
     tagline: `The only shame you'll get from drawing the most obscene stuff ever
     will be between you and your friends only. 😏`,
+  },
+
+  features: {
+    drawing: {
+      title: 'Drawing',
+      text: `Common hand-drawing features with mices and touchscreens,
+      including color selection, brush selection and objects manipulation
+      (move, scale, rotate, erase). Drawings are synchronized in real-time. Powered by {fabricjs}.`,
+    },
+    messaging: {
+      title: 'Messaging',
+      text: `Talk to your drawing buddies in real-time. Powered by {socketio}.`,
+    },
+    p2p: {
+      title: 'Peer-to-peer',
+      text: `All drawings and chat messages are synchronized in a peer-to-peer fashion.
+      This means synchronization servers will never keep any data, only transmitting it.
+      However, this also means all sessions are ephemeral. Powered by {socketio}.`,
+    },
+    privacy: {
+      title: 'Privacy',
+      text: `All drawings and chat messages are sent end-to-end encrypted over the wire,
+      using "secret-key authenticated encryption". This means synchronization servers
+      will never be able to see your data, even when transmitting it. Powered by {tweetnacljs}.`,
+    },
+    oss: {
+      title: 'Open-Source',
+      text: `We strongly believe transparency goes hand-in-hand with privacy,
+      that's why this application is free and open-source software under
+      {license} license, available publicly on {repository}.`,
+    },
+    suggestions: {
+      title: 'Suggestions',
+      text: `Found a bug? Missing a feature? Open an issue and/or contribute on {repository}.`,
+    },
   },
 
   rooms: {
