@@ -4,11 +4,13 @@ import * as crypto from '~/utils/crypto'
 const wsUrl = process.env.WS_URL || ''
 
 export type Socket = SocketIOClient.Socket
+export type ConnectHandler = (connected: boolean) => void
 export type UserListHandler = (socketids: string[]) => void
 export type UserHandler = (socketid: string) => void
 export type DataHandler = (data: any) => void
 
 export function createSocket(
+  connectHandler: ConnectHandler,
   userListHandler: UserListHandler,
   userJoinHandler: UserHandler,
   userLeaveHandler: UserHandler,
@@ -16,6 +18,8 @@ export function createSocket(
   encryptionKey: string
 ): Socket {
   const socket = io(wsUrl)
+  socket.on('connect', () => connectHandler(true))
+  socket.on('disconnect', () => connectHandler(false))
   socket.on('user-list', userListHandler)
   socket.on('user-join', userJoinHandler)
   socket.on('user-leave', userLeaveHandler)
@@ -55,7 +59,7 @@ export function broadcastVolatileRoomData(
   socket.emit('broadcast-volatile-room-data', room, encryptedData)
 }
 
-export function newRoomData(dataHandler: DataHandler, encryptionKey: string) {
+function newRoomData(dataHandler: DataHandler, encryptionKey: string) {
   return (encryptedData: string): void => {
     const data = crypto.decrypt(encryptedData, encryptionKey)
     dataHandler(data)

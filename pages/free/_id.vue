@@ -17,6 +17,12 @@
               <chat :messages="chatMessages" @new-message="sendChatMessage" />
             </div>
           </div>
+
+          <b-loading
+            :is-full-page="true"
+            :active="!connected"
+            :can-cancel="false"
+          />
         </div>
       </div>
     </section>
@@ -62,6 +68,7 @@ export default Vue.extend({
       link: `${process.env.HOSTNAME}${this.$route.fullPath}`,
       room: '',
       encryptionKey: '',
+      connected: false,
       socket: undefined as io.Socket | undefined,
       users: [] as User[],
       canvas: '',
@@ -76,7 +83,14 @@ export default Vue.extend({
       this.encryptionKey = hash.slice(1)
     }
 
-    this.joinRoom()
+    this.socket = io.createSocket(
+      this.connectHandler,
+      this.userListHandler,
+      this.userJoinHandler,
+      this.userLeaveHandler,
+      this.roomDataHandler,
+      this.encryptionKey
+    )
 
     window.addEventListener('beforeunload', this.browserClose)
   },
@@ -129,14 +143,9 @@ export default Vue.extend({
     },
 
     joinRoom(): void {
-      this.socket = io.createSocket(
-        this.userListHandler,
-        this.userJoinHandler,
-        this.userLeaveHandler,
-        this.roomDataHandler,
-        this.encryptionKey
-      )
-      io.joinRoom(this.socket, this.room)
+      if (this.socket) {
+        io.joinRoom(this.socket, this.room)
+      }
     },
 
     leaveRoom(): void {
@@ -154,6 +163,13 @@ export default Vue.extend({
       if (this.socket) {
         io.broadcastRoomData(this.socket, this.room, data, this.encryptionKey)
       }
+    },
+
+    connectHandler(connected: boolean): void {
+      if (connected) {
+        this.joinRoom()
+      }
+      this.connected = connected
     },
 
     userListHandler(socketsids: string[]): void {
