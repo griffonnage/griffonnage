@@ -34,15 +34,8 @@ import Vue from 'vue'
 import UserList, { User } from '~/components/UserList.vue'
 import JoinLink from '~/components/JoinLink.vue'
 import Drawing from '~/components/Drawing.vue'
-import Chat from '~/components/Chat.vue'
+import Chat, { ChatMessage } from '~/components/Chat.vue'
 import * as io from '~/utils/io'
-
-interface ChatMessage {
-  socketid: string
-  username: string
-  content: string
-  datetime: Date
-}
 
 interface Data {
   kind: string

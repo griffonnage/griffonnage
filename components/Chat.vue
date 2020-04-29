@@ -44,6 +44,13 @@
 <script lang="ts">
 import Vue from 'vue'
 
+export interface ChatMessage {
+  socketid: string
+  username: string
+  content: string
+  datetime: Date
+}
+
 export default Vue.extend({
   props: {
     messages: {
