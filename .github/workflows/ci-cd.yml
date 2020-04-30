@@ -49,7 +49,7 @@ jobs:
       SYNC_URL: ${{ secrets.SYNC_URL_PREVIEW }}
       CHIFFRE_PUBLIC_KEY: ""
       CHIFFRE_PROJECT_ID: ""
-      SENTRY_DSN: ""
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
     steps:
       - uses: actions/checkout@v2
