@@ -5,6 +5,12 @@
         <div class="columns">
           <div class="column is-half is-offset-one-quarter">
             <div class="has-text-centered">
+              <figure class="image container is-256x256">
+                <img src="~/assets/svg/logo.svg" alt="Logo" />
+              </figure>
+
+              <br />
+
               <p class="title">
                 {{ $t('home.title') }}
               </p>

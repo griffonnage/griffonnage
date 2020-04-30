@@ -1,6 +1,8 @@
-# Griffonnage
-
-> Scribble careless drawings with friends, privately
+<div align="center" style="display:flex;flex-direction:column;">
+  <a href="https://griffonnage.now.sh">
+    <img src="./static/banner.png" alt="Griffonnage logo" />
+  </a>
+</div>
 
 [![GitHub Tag](https://img.shields.io/github/tag/griffonnage/web.svg)](https://github.com/griffonnage/web/releases/latest)
 [![GitHub Action CI/CD](https://github.com/griffonnage/web/workflows/CI/CD/badge.svg)](https://github.com/griffonnage/web/actions?query=workflow%3A%22CI%2FCD%22)

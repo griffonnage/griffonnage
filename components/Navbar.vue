@@ -5,16 +5,11 @@
         <b-navbar transparent>
           <template slot="brand">
             <b-navbar-item :to="localePath('index')" tag="nuxt-link">
-              <!-- <img src="~/assets/svg/logo.svg" alt="Logo" /> -->
-              {{ $t('navbar.brand') }}
+              <img src="~/assets/svg/brand.svg" :alt="$t('navbar.brand')" />
             </b-navbar-item>
           </template>
 
-          <template slot="start">
-            <b-navbar-item :to="localePath('index')" tag="nuxt-link">
-              {{ $t('navbar.home') }}
-            </b-navbar-item>
-          </template>
+          <template slot="start" />
 
           <template slot="end">
             <b-navbar-dropdown
