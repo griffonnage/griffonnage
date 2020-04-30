@@ -43,6 +43,7 @@ jobs:
     if: contains(github.ref, 'master')
 
     env:
+      APP_ENVIRONMENT: ${{ secrets.APP_ENVIRONMENT_PREVIEW }}
       BASE_PROTOCOL: ${{ secrets.BASE_PROTOCOL }}
       BASE_URL: ${{ secrets.BASE_URL_PREVIEW }}
       SYNC_URL: ${{ secrets.SYNC_URL_PREVIEW }}
@@ -78,6 +79,7 @@ jobs:
     if: contains(github.ref, 'tags')
 
     env:
+      APP_ENVIRONMENT: ${{ secrets.APP_ENVIRONMENT }}
       BASE_PROTOCOL: ${{ secrets.BASE_PROTOCOL }}
       BASE_URL: ${{ secrets.BASE_URL }}
       SYNC_URL: ${{ secrets.SYNC_URL }}

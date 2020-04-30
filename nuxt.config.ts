@@ -12,6 +12,7 @@ const appVersion = process.env.npm_package_version || ''
 const appKeywords = appCommon.keywords
 const appColor = appCommon.color
 
+const appEnvironment = process.env.APP_ENVIRONMENT || process.env.NODE_ENV
 const baseUrl = process.env.BASE_URL || ''
 const baseProtocol = process.env.BASE_PROTOCOL || 'https'
 const staticPrefix = process.env.STATIC_PREFIX || ''
@@ -109,6 +110,10 @@ const config: Configuration = {
 
   sentry: {
     dsn: sentryDsn,
+    config: {
+      environment: appEnvironment,
+      release: appVersion,
+    },
   },
 
   pwa: {
