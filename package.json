@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/griffonnage/web.git"
+    "url": "git+https://github.com/griffonnage/griffonnage.git"
   },
   "bugs": {
-    "url": "https://github.com/griffonnage/web/issues"
+    "url": "https://github.com/griffonnage/griffonnage/issues"
   },
-  "homepage": "https://github.com/griffonnage/web#readme",
+  "homepage": "https://github.com/griffonnage/griffonnage#readme",
   "private": true,
   "license": "AGPL-3.0",
   "scripts": {

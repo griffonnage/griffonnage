@@ -4,9 +4,10 @@
   </a>
 </div>
 
-[![GitHub Tag](https://img.shields.io/github/tag/griffonnage/web.svg)](https://github.com/griffonnage/web/releases/latest)
-[![GitHub Action CI/CD](https://github.com/griffonnage/web/workflows/CI/CD/badge.svg)](https://github.com/griffonnage/web/actions?query=workflow%3A%22CI%2FCD%22)
-[![Coverage Status](https://img.shields.io/codecov/c/github/griffonnage/web)](https://codecov.io/gh/griffonnage/web)
+[![GitHub Tag](https://img.shields.io/github/tag/griffonnage/griffonnage.svg)](https://github.com/griffonnage/griffonnage/releases/latest)
+[![GitHub Action CI/CD](https://github.com/griffonnage/griffonnage/workflows/CI/CD/badge.svg)](https://github.com/griffonnage/griffonnage/actions?query=workflow%3A%22CI%2FCD%22)
+[![Coverage Status](https://img.shields.io/codecov/c/github/griffonnage/griffonnage)](https://codecov.io/gh/griffonnage/griffonnage)
+[![License](https://img.shields.io/github/license/griffonnage/griffonnage)](https://github.com/griffonnage/griffonnage/blob/master/LICENSE)
 
 Griffonnage allows truly private synchronized drawings with friends.
 All the drawings and chat messages are sent end-to-end encrypted in a

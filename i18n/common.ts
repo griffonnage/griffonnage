@@ -22,11 +22,11 @@ export default {
     },
     repository: {
       name: 'GitHub',
-      url: 'https://github.com/griffonnage/web',
+      url: 'https://github.com/griffonnage/griffonnage',
     },
     license: {
       name: 'AGPL-3',
-      url: 'https://github.com/griffonnage/web/blob/master/LICENSE',
+      url: 'https://github.com/griffonnage/griffonnage/blob/master/LICENSE',
     },
   },
   links: {
