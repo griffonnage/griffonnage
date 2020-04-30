@@ -1,7 +1,7 @@
 import io from 'socket.io-client'
 import * as crypto from '~/utils/crypto'
 
-const wsUrl = process.env.WS_URL || ''
+const syncUrl = process.env.SYNC_URL || ''
 
 export type Socket = SocketIOClient.Socket
 export type ConnectHandler = (connected: boolean) => void
@@ -17,7 +17,7 @@ export function createSocket(
   dataHandler: DataHandler,
   encryptionKey: string
 ): Socket {
-  const socket = io(wsUrl)
+  const socket = io(syncUrl)
   socket.on('connect', () => connectHandler(true))
   socket.on('disconnect', () => connectHandler(false))
   socket.on('user-list', userListHandler)
