@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2020-04-30
+### Added
+- Add simple branding
+
+### Changed
+- Update repository url
+
 ## [0.1.1] - 2020-04-29
 ### Added
 - Add features description to homepage
@@ -19,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * End-to-end encryption of all the data
     * Basic instant chat messages
 
-[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/griffonnage/griffonnage/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/griffonnage/griffonnage/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/griffonnage/griffonnage/releases/tag/0.1.0
