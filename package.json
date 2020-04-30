@@ -43,7 +43,7 @@
     "nuxt": "^2.12.2",
     "nuxt-buefy": "^0.3.28",
     "nuxt-chiffre": "^0.3.0",
-    "nuxt-i18n": "^6.10.1",
+    "nuxt-i18n": "^6.11.0",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "tweetnacl": "^1.0.3",
