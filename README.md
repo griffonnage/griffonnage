@@ -1,7 +1,7 @@
 <div align="center" style="display:flex;flex-direction:column;">
   <a href="https://griffonnage.now.sh">
     <img
-      src="https://raw.githubusercontent.com/griffonnage/griffonnage-branding/master/png/banner.png"
+      src="https://raw.githubusercontent.com/griffonnage/griffonnage-branding/master/svg/banner.svg"
       alt="Griffonnage: Scribble careless drawings with friends, privately"
     />
   </a>
