@@ -1,4 +1,5 @@
 import { Configuration } from '@nuxt/types'
+import { Event as SentryEvent } from '@sentry/types'
 import i18n from './i18n'
 
 require('dotenv').config()
@@ -113,6 +114,14 @@ const config: Configuration = {
     config: {
       environment: appEnvironment,
       release: appVersion,
+      beforeSend(event: SentryEvent) {
+        // scrub sensitive url fragments from Sentry reports
+        if (event.request?.url) {
+          event.request.url = event.request.url.split('#')[0]
+        }
+
+        return event
+      },
     },
   },
 
