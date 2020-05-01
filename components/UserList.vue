@@ -30,7 +30,7 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <span v-if="u.me">
+            <span v-if="u.me" class="has-text-weight-bold">
               <span>{{ $t('userlist.me') }}</span>
               <span v-if="u.username">({{ u.username }})</span>
             </span>
