@@ -148,12 +148,12 @@ export default Vue.extend({
       if (this.canvas) {
         const scale = window.devicePixelRatio
         const width = this.canvas.parentElement?.clientWidth as number
-        const height = 200 * scale
+        const height = 400
 
         this.canvas.width = width
         this.canvas.height = height
-        this.canvas.style.width = `${width / scale}`
-        this.canvas.style.width = `${height / scale}`
+        this.canvas.style.width = `${width}px`
+        this.canvas.style.width = `${height}px`
 
         const canvasCtx = this.canvas.getContext('2d')
         if (canvasCtx) {
