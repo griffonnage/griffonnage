@@ -32,7 +32,7 @@
 
             <div class="has-text-centered">
               <b-button
-                type="primary"
+                type="is-link"
                 icon-pack="fas"
                 icon-left="pencil-alt"
                 :to="
@@ -43,6 +43,7 @@
                   })
                 "
                 tag="nuxt-link"
+                outlined
               >
                 {{ $t('home.drawFreely') }}
               </b-button>
