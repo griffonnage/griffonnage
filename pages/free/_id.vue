@@ -37,8 +37,14 @@ import Drawing from '~/components/Drawing.vue'
 import Chat, { ChatMessage } from '~/components/Chat.vue'
 import * as io from '~/utils/io'
 
-interface Data {
-  kind: string
+enum RoomEvent {
+  hi = 'hi',
+  canvas = 'canvas',
+  chatMessage = 'chat-message',
+}
+
+interface RoomData {
+  event: RoomEvent
   payload: any
 }
 
@@ -100,7 +106,7 @@ export default Vue.extend({
 
     sayHi(): void {
       const hiData = {
-        kind: 'hi',
+        event: RoomEvent.hi,
         payload: {
           socketid: this.socket?.id,
           username: this.username,
@@ -112,7 +118,7 @@ export default Vue.extend({
 
     shareCanvas(): void {
       const canvasData = {
-        kind: 'canvas',
+        event: RoomEvent.canvas,
         payload: {
           socketid: this.socket?.id,
           canvas: this.canvas,
@@ -123,7 +129,7 @@ export default Vue.extend({
 
     sendChatMessage(newMessage: string): void {
       const chatMessageData = {
-        kind: 'chat-message',
+        event: RoomEvent.chatMessage,
         payload: {
           socketid: this.socket?.id,
           username: this.username,
@@ -180,21 +186,21 @@ export default Vue.extend({
 
     userLeaveHandler(_: string): void {},
 
-    roomDataHandler(data: Data): void {
+    roomDataHandler(data: RoomData): void {
       const handlers = new Map([
-        ['hi', this.handleHiData],
-        ['canvas', this.handleCanvasData],
-        ['chat-message', this.handleChatMessage],
+        [RoomEvent.hi, this.handleHiData],
+        [RoomEvent.canvas, this.handleCanvasData],
+        [RoomEvent.chatMessage, this.handleChatMessage],
       ])
 
-      const hd = handlers.get(data.kind)
+      const hd = handlers.get(data.event)
 
       if (hd) {
         hd(data)
       }
     },
 
-    handleHiData(data: Data): void {
+    handleHiData(data: RoomData): void {
       this.users.forEach((u) => {
         if (u.socketid === data.payload.socketid) {
           u.username = data.payload.username
@@ -202,11 +208,11 @@ export default Vue.extend({
       })
     },
 
-    handleCanvasData(data: Data): void {
+    handleCanvasData(data: RoomData): void {
       this.canvas = data.payload.canvas
     },
 
-    handleChatMessage(data: Data): void {
+    handleChatMessage(data: RoomData): void {
       this.chatMessages.unshift(data.payload)
     },
   },
