@@ -1,7 +1,7 @@
 <template>
   <b-field>
     <p class="control">
-      <b-tooltip :label="$t('rooms.secureLink')" type="is-dark">
+      <b-tooltip :label="$t('join.secureLink')" type="is-dark">
         <span class="button is-static">
           <b-icon
             pack="fas"
@@ -40,7 +40,7 @@ export default Vue.extend({
       this.$buefy.toast.open({
         duration: 2000,
         position: 'is-top',
-        message: this.$t('rooms.linkCopied') as string,
+        message: this.$t('join.linkCopied') as string,
         type: 'is-success',
       })
       this.$emit('clipboard-link', this.value)

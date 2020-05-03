@@ -76,7 +76,7 @@ export default {
     },
   },
 
-  rooms: {
+  join: {
     secureLink: 'This connection is secured using end-to-end encryption',
     linkCopied: 'Link copied to clipboard',
   },

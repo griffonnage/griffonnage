@@ -76,7 +76,7 @@ export default {
     },
   },
 
-  rooms: {
+  join: {
     secureLink: 'Cette connection est sécurisé par chiffrement bout-en-bout',
     linkCopied: 'Lien copié dans le presse-papier',
   },
