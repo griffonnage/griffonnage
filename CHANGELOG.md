@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2020-05-04
+### Fixed
+- Homepage hero button style
+- Minor refactors
+
 ## [0.1.4] - 2020-05-01
 ### Added
 - Bold text for current user in list
@@ -38,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * End-to-end encryption of all the data
     * Basic instant chat messages
 
-[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.1.4...HEAD
+[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.1.5...HEAD
+[0.1.5]: https://github.com/griffonnage/griffonnage/compare/0.1.4...0.1.5
 [0.1.4]: https://github.com/griffonnage/griffonnage/compare/0.1.3...0.1.4
 [0.1.3]: https://github.com/griffonnage/griffonnage/compare/0.1.2...0.1.3
 [0.1.2]: https://github.com/griffonnage/griffonnage/compare/0.1.1...0.1.2
