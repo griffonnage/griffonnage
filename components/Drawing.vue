@@ -91,6 +91,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapActions, mapState } from 'vuex'
 import { fabric } from 'fabric'
 
 const brushSizeWidth = {
@@ -100,13 +101,6 @@ const brushSizeWidth = {
 }
 
 export default Vue.extend({
-  props: {
-    value: {
-      type: String,
-      required: true,
-    },
-  },
-
   data() {
     return {
       canvas: null as HTMLCanvasElement | null,
@@ -118,13 +112,15 @@ export default Vue.extend({
     }
   },
 
+  computed: {
+    ...mapState('room', {
+      jsonCanvas: 'jsonCanvas',
+    }),
+  },
+
   watch: {
-    value(canvas: string): void {
-      if (this.fabric) {
-        this.loadingCanvasState = true
-        this.fabric.loadFromJSON(canvas, () => {})
-        this.loadingCanvasState = false
-      }
+    jsonCanvas(canvas: string): void {
+      this.loadCanvas(canvas)
     },
   },
 
@@ -141,9 +137,15 @@ export default Vue.extend({
     this.fabric.on('object:modified', this.canvasChangedEvent)
     this.fabric.on('object:removed', this.canvasChangedEvent)
     this.fabric.on('canvas:cleared', this.canvasChangedEvent)
+
+    this.loadCanvas(this.jsonCanvas)
   },
 
   methods: {
+    ...mapActions('room', {
+      shareCanvas: 'shareCanvas',
+    }),
+
     handleResize(): void {
       if (this.canvas) {
         const scale = window.devicePixelRatio
@@ -159,6 +161,14 @@ export default Vue.extend({
         if (canvasCtx) {
           canvasCtx.scale(scale, scale)
         }
+      }
+    },
+
+    loadCanvas(canvas: string): void {
+      if (this.fabric) {
+        this.loadingCanvasState = true
+        this.fabric.loadFromJSON(canvas, () => {})
+        this.loadingCanvasState = false
       }
     },
 
@@ -209,7 +219,7 @@ export default Vue.extend({
 
     canvasChangedEvent(): void {
       if (this.fabric && !this.loadingCanvasState) {
-        this.$emit('input', JSON.stringify(this.fabric))
+        this.shareCanvas(JSON.stringify(this.fabric))
       }
     },
   },

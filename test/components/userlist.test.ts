@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Buefy from 'buefy'
 import faker from 'faker'
@@ -7,12 +8,49 @@ import UserList from '~/components/UserList.vue'
 
 faker.seed(1234)
 
-function createWrapper(
-  component: Vue.VueConstructor<Vue>,
-  optionalProps?: object
-) {
+function generateUsers() {
+  const users = []
+  for (let i = 0; i < 4; ++i) {
+    users.push({
+      id: faker.random.alphaNumeric(),
+      username: faker.internet.userName(),
+      me: false,
+    })
+  }
+  users[0].me = true
+  return users
+}
+
+function createStoreModule() {
+  return {
+    room: {
+      namespaced: true,
+      state: {
+        username: faker.internet.userName(),
+        users: generateUsers(),
+      },
+      actions: {
+        updateUsername: jest.fn(),
+        generateUsername: jest.fn(),
+      },
+    },
+  }
+}
+
+function createStore(modules = {}) {
+  return new Vuex.Store({
+    modules: {
+      ...modules,
+    },
+  })
+}
+
+function createWrapper(component: Vue.VueConstructor<Vue>, storeModules = {}) {
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   localVue.use(Buefy)
+
+  const store = createStore(storeModules)
 
   const mocks = {
     $t: (msg: string) => msg,
@@ -22,45 +60,24 @@ function createWrapper(
 
   return mount(component, {
     localVue,
+    store,
     mocks,
     stubs,
-    propsData: optionalProps,
   })
 }
 
-function generateUser() {
-  return {
-    socketid: faker.random.alphaNumeric(),
-    username: faker.internet.userName(),
-    me: false,
-  }
-}
-
-function generateProps() {
-  const users = []
-  for (let i = 0; i < 4; ++i) {
-    users.push(generateUser())
-  }
-  users[0].me = true
-  users[1].username = ''
-
-  return {
-    users,
-  }
-}
-
-describe('components/join-link', () => {
+describe('components/user-list', () => {
   it('is a Vue instance', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(UserList, storeModule)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
   it('can display users in given order', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(UserList, storeModule)
 
-    props.users.forEach((u, i) => {
+    storeModule.room.state.users.forEach((u, i) => {
       const msgComp = wrapper.find(`article[data-user=user-${i}]`)
 
       if (u.me) {
@@ -79,55 +96,44 @@ describe('components/join-link', () => {
     })
   })
 
-  it('can send username at startup', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
-
-    expect(wrapper.emitted('username-changed')?.length).toBe(1)
-    expect(wrapper.emitted('username-changed')?.[0][0].length).toBeGreaterThan(
-      1
-    )
-  })
-
   it('can input a new username', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(UserList, storeModule)
 
     const username = faker.internet.userName()
     const input = wrapper.find('input')
     input.setValue(username)
 
     await flushPromises()
-    expect(wrapper.emitted('username-changed')?.length).toBe(2)
-    expect(wrapper.emitted('username-changed')?.[1][0]).toBe(username)
+
+    expect(storeModule.room.actions.updateUsername).toHaveBeenCalledWith(
+      expect.anything(),
+      username
+    )
   })
 
   it('can generate a new username', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(UserList, storeModule)
 
     const button = wrapper.find('button')
     button.trigger('click')
     await flushPromises()
 
-    expect(wrapper.emitted('username-changed')?.length).toBe(2)
-    expect(wrapper.emitted('username-changed')?.[1][0].length).toBeGreaterThan(
-      1
-    )
+    expect(storeModule.room.actions.generateUsername).toHaveBeenCalled()
   })
 
   it('can generate a new username when input is empty', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(UserList, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(UserList, storeModule)
 
     const username = ''
     const input = wrapper.find('input')
     input.setValue(username)
 
     await flushPromises()
-    expect(wrapper.emitted('username-changed')?.length).toBe(2)
-    expect(wrapper.emitted('username-changed')?.[1][0].length).toBeGreaterThan(
-      1
-    )
+
+    expect(storeModule.room.actions.updateUsername).not.toHaveBeenCalled()
+    expect(storeModule.room.actions.generateUsername).toHaveBeenCalled()
   })
 })

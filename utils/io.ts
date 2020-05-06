@@ -1,67 +1,9 @@
 import io from 'socket.io-client'
-import * as crypto from '~/utils/crypto'
 
 const syncUrl = process.env.SYNC_URL || ''
 
 export type Socket = SocketIOClient.Socket
-export type ConnectHandler = (connected: boolean) => void
-export type UserListHandler = (socketids: string[]) => void
-export type UserHandler = (socketid: string) => void
-export type DataHandler = (data: any) => void
 
-export function createSocket(
-  connectHandler: ConnectHandler,
-  userListHandler: UserListHandler,
-  userJoinHandler: UserHandler,
-  userLeaveHandler: UserHandler,
-  dataHandler: DataHandler,
-  encryptionKey: string
-): Socket {
-  const socket = io(syncUrl)
-  socket.on('connect', () => connectHandler(true))
-  socket.on('disconnect', () => connectHandler(false))
-  socket.on('user-list', userListHandler)
-  socket.on('user-join', userJoinHandler)
-  socket.on('user-leave', userLeaveHandler)
-  socket.on('new-room-data', newRoomData(dataHandler, encryptionKey))
-  return socket
-}
-
-export function closeSocket(socket: Socket) {
-  socket.close()
-}
-
-export function joinRoom(socket: Socket, room: string) {
-  socket.emit('join-room', room)
-}
-
-export function leaveRoom(socket: Socket, room: string) {
-  socket.emit('leave-room', room)
-}
-
-export function broadcastRoomData(
-  socket: Socket,
-  room: string,
-  data: any,
-  encryptionKey: string
-): void {
-  const encryptedData = crypto.encrypt(data, encryptionKey)
-  socket.emit('broadcast-room-data', room, encryptedData)
-}
-
-export function broadcastVolatileRoomData(
-  socket: Socket,
-  room: string,
-  data: any,
-  encryptionKey: string
-): void {
-  const encryptedData = crypto.encrypt(data, encryptionKey)
-  socket.emit('broadcast-volatile-room-data', room, encryptedData)
-}
-
-function newRoomData(dataHandler: DataHandler, encryptionKey: string) {
-  return (encryptedData: string): void => {
-    const data = crypto.decrypt(encryptedData, encryptionKey)
-    dataHandler(data)
-  }
+export function createSocket(): Socket {
+  return io(syncUrl)
 }

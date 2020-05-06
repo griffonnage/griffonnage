@@ -2,11 +2,11 @@
   <div>
     <b-field>
       <b-input
-        v-model="username"
+        :value="username"
         :placeholder="$t('userlist.username')"
         :maxlength="20"
         :has-counter="true"
-        @input="changeUsername"
+        @input="usernameChanged"
       />
       <p class="control">
         <b-button
@@ -19,7 +19,7 @@
 
     <article
       v-for="(u, i) in users"
-      :key="u.socketid"
+      :key="u.id"
       :data-user="`user-${i}`"
       class="media"
     >
@@ -45,47 +45,27 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import * as usernames from '~/utils/usernames'
-
-export interface User {
-  socketid: string
-  username?: string
-  me: boolean
-}
+import { mapActions, mapState } from 'vuex'
 
 export default Vue.extend({
-  props: {
-    users: {
-      type: Array,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      username: usernames.generate(),
-    }
-  },
-
-  mounted() {
-    this.emitUsernameChanged()
+  computed: {
+    ...mapState('room', {
+      username: 'username',
+      users: 'users',
+    }),
   },
 
   methods: {
-    emitUsernameChanged(): void {
-      this.$emit('username-changed', this.username)
-    },
+    ...mapActions('room', {
+      updateUsername: 'updateUsername',
+      generateUsername: 'generateUsername',
+    }),
 
-    generateUsername(): void {
-      this.username = usernames.generate()
-      this.emitUsernameChanged()
-    },
-
-    changeUsername(): void {
-      if (this.username === '') {
+    usernameChanged(value: string): void {
+      if (value === '') {
         this.generateUsername()
       } else {
-        this.emitUsernameChanged()
+        this.updateUsername(value)
       }
     },
   },

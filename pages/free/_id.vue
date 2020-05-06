@@ -5,16 +5,16 @@
         <div class="container">
           <div class="columns">
             <div class="column is-one-fifth">
-              <user-list :users="users" @username-changed="updateUsername" />
+              <user-list />
             </div>
 
             <div class="column is-three-fifths">
               <join-link v-model="link" />
-              <drawing v-model="canvas" @input="shareCanvas" />
+              <drawing />
             </div>
 
             <div class="column is-one-fifth">
-              <chat :messages="chatMessages" @new-message="sendChatMessage" />
+              <chat />
             </div>
           </div>
 
@@ -31,22 +31,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import UserList, { User } from '~/components/UserList.vue'
+import { mapActions, mapState } from 'vuex'
+import UserList from '~/components/UserList.vue'
 import JoinLink from '~/components/JoinLink.vue'
 import Drawing from '~/components/Drawing.vue'
-import Chat, { ChatMessage } from '~/components/Chat.vue'
-import * as io from '~/utils/io'
-
-enum RoomEvent {
-  hi = 'hi',
-  canvas = 'canvas',
-  chatMessage = 'chat-message',
-}
-
-interface RoomData {
-  event: RoomEvent
-  payload: any
-}
+import Chat from '~/components/Chat.vue'
 
 export default Vue.extend({
   components: {
@@ -56,165 +45,42 @@ export default Vue.extend({
     Chat,
   },
 
-  asyncData({ route }) {
-    return {
-      room: route.params.id,
-    }
-  },
-
   data() {
     return {
       link: `${process.env.HOSTNAME}${this.$route.fullPath}`,
-      room: '',
-      encryptionKey: '',
-      connected: false,
-      socket: undefined as io.Socket | undefined,
-      users: [] as User[],
-      canvas: '',
-      username: '',
-      chatMessages: [] as ChatMessage[],
     }
+  },
+
+  computed: {
+    ...mapState('room', {
+      connected: 'connected',
+    }),
   },
 
   mounted() {
+    const room = this.$route.params.id
     const hash = this.$route.hash
+    let encryptionKey = ''
     if (hash.length > 1) {
-      this.encryptionKey = hash.slice(1)
+      encryptionKey = hash.slice(1)
     }
 
-    this.socket = io.createSocket(
-      this.connectHandler,
-      this.userListHandler,
-      this.userJoinHandler,
-      this.userLeaveHandler,
-      this.roomDataHandler,
-      this.encryptionKey
-    )
+    if (room && encryptionKey) {
+      this.connect({ room, encryptionKey })
+    }
 
-    window.addEventListener('beforeunload', this.browserClose)
+    window.addEventListener('beforeunload', this.disconnect)
   },
 
   beforeDestroy() {
-    this.leaveRoom()
+    this.disconnect()
   },
 
   methods: {
-    updateUsername(username: string): void {
-      this.username = username
-      this.sayHi()
-    },
-
-    sayHi(): void {
-      const hiData = {
-        event: RoomEvent.hi,
-        payload: {
-          socketid: this.socket?.id,
-          username: this.username,
-        },
-      }
-      this.sendRoomData(hiData)
-      this.handleHiData(hiData)
-    },
-
-    shareCanvas(): void {
-      const canvasData = {
-        event: RoomEvent.canvas,
-        payload: {
-          socketid: this.socket?.id,
-          canvas: this.canvas,
-        },
-      }
-      this.sendRoomData(canvasData)
-    },
-
-    sendChatMessage(newMessage: string): void {
-      const chatMessageData = {
-        event: RoomEvent.chatMessage,
-        payload: {
-          socketid: this.socket?.id,
-          username: this.username,
-          content: newMessage,
-          datetime: new Date().toISOString(),
-        },
-      }
-      this.sendRoomData(chatMessageData)
-      this.handleChatMessage(chatMessageData)
-    },
-
-    joinRoom(): void {
-      if (this.socket) {
-        io.joinRoom(this.socket, this.room)
-      }
-    },
-
-    leaveRoom(): void {
-      if (this.socket) {
-        io.leaveRoom(this.socket, this.room)
-        io.closeSocket(this.socket)
-      }
-    },
-
-    browserClose(_: Event): void {
-      this.leaveRoom()
-    },
-
-    sendRoomData(data: any): void {
-      if (this.socket) {
-        io.broadcastRoomData(this.socket, this.room, data, this.encryptionKey)
-      }
-    },
-
-    connectHandler(connected: boolean): void {
-      if (connected) {
-        this.joinRoom()
-      }
-      this.connected = connected
-    },
-
-    userListHandler(socketsids: string[]): void {
-      this.users = socketsids.map((s) => ({
-        socketid: s,
-        username: '',
-        me: this.socket?.id === s,
-      }))
-      this.sayHi()
-    },
-
-    userJoinHandler(_: string): void {
-      this.shareCanvas()
-    },
-
-    userLeaveHandler(_: string): void {},
-
-    roomDataHandler(data: RoomData): void {
-      const handlers = new Map([
-        [RoomEvent.hi, this.handleHiData],
-        [RoomEvent.canvas, this.handleCanvasData],
-        [RoomEvent.chatMessage, this.handleChatMessage],
-      ])
-
-      const hd = handlers.get(data.event)
-
-      if (hd) {
-        hd(data)
-      }
-    },
-
-    handleHiData(data: RoomData): void {
-      this.users.forEach((u) => {
-        if (u.socketid === data.payload.socketid) {
-          u.username = data.payload.username
-        }
-      })
-    },
-
-    handleCanvasData(data: RoomData): void {
-      this.canvas = data.payload.canvas
-    },
-
-    handleChatMessage(data: RoomData): void {
-      this.chatMessages.unshift(data.payload)
-    },
+    ...mapActions('room', {
+      connect: 'connect',
+      disconnect: 'disconnect',
+    }),
   },
 })
 </script>

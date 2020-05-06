@@ -43,32 +43,29 @@
 
 <script lang="ts">
 import Vue from 'vue'
-
-export interface ChatMessage {
-  socketid: string
-  username: string
-  content: string
-  datetime: Date
-}
+import { mapActions, mapState } from 'vuex'
 
 export default Vue.extend({
-  props: {
-    messages: {
-      type: Array,
-      required: true,
-    },
-  },
-
   data() {
     return {
       newMessage: '',
     }
   },
 
+  computed: {
+    ...mapState('room', {
+      messages: 'chatMessages',
+    }),
+  },
+
   methods: {
+    ...mapActions('room', {
+      sendChatMessage: 'sendChatMessage',
+    }),
+
     send(): void {
       if (this.newMessage !== '') {
-        this.$emit('new-message', this.newMessage)
+        this.sendChatMessage(this.newMessage)
         this.newMessage = ''
       }
     },

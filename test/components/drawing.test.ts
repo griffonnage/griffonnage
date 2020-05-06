@@ -1,16 +1,42 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Buefy from 'buefy'
 import flushPromises from 'flush-promises'
 import Drawing from '~/components/Drawing.vue'
 
+function createStoreModule() {
+  return {
+    room: {
+      namespaced: true,
+      state: {
+        jsonCanvas: '',
+      },
+      actions: {
+        shareCanvas: jest.fn(),
+      },
+    },
+  }
+}
+
+function createStore(modules = {}) {
+  return new Vuex.Store({
+    modules: {
+      ...modules,
+    },
+  })
+}
+
 function createWrapper(
   component: Vue.VueConstructor<Vue>,
-  optionalProps?: object,
+  storeModules = {},
   optionalData?: () => object
 ) {
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   localVue.use(Buefy)
+
+  const store = createStore(storeModules)
 
   const mocks = {}
 
@@ -20,29 +46,23 @@ function createWrapper(
 
   return mount(component, {
     localVue,
+    store,
     mocks,
     stubs,
-    propsData: optionalProps,
     data: optionalData,
   })
 }
 
-function generateProps() {
-  return {
-    value: '',
-  }
-}
-
 describe('components/drawing', () => {
   it('is a Vue instance', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Drawing, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
   it('can clear canvas', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Drawing, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
 
     const clear = wrapper.find('button[data-control-clear]')
     expect(clear.attributes('disabled')).toBeUndefined()
@@ -50,17 +70,17 @@ describe('components/drawing', () => {
     clear.trigger('click')
     await flushPromises()
 
-    setTimeout(() => {
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      const canvasState = JSON.parse(wrapper.emitted('input')?.[0][0])
-      expect(canvasState.version).toBeTruthy()
-      expect(canvasState.objects).toStrictEqual([])
-    }, 100)
+    expect(storeModule.room.actions.shareCanvas).toHaveBeenCalled()
+    const canvasState = JSON.parse(
+      storeModule.room.actions.shareCanvas.mock.calls[0][1]
+    )
+    expect(canvasState.version).toBeTruthy()
+    expect(canvasState.objects).toStrictEqual([])
   })
 
   it('can switch to selection mode', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Drawing, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
 
     const cut = wrapper.find('button[data-control-cut]')
     const selection = wrapper.find('button[data-control-selection]')
@@ -79,9 +99,9 @@ describe('components/drawing', () => {
   })
 
   it('can switch to drawing mode', async () => {
-    const props = generateProps()
+    const storeModule = createStoreModule()
     const data = () => ({ freeDrawing: false })
-    const wrapper = createWrapper(Drawing, props, data)
+    const wrapper = createWrapper(Drawing, storeModule, data)
 
     const selection = wrapper.find('button[data-control-selection]')
     const drawing = wrapper.find('button[data-control-drawing]')
@@ -97,9 +117,9 @@ describe('components/drawing', () => {
   })
 
   it('can switch to small brush', async () => {
-    const props = generateProps()
+    const storeModule = createStoreModule()
     const data = () => ({ brushSize: 'medium' })
-    const wrapper = createWrapper(Drawing, props, data)
+    const wrapper = createWrapper(Drawing, storeModule, data)
 
     const smallBrush = wrapper.find('button[data-brush-small]')
     const mediumBrush = wrapper.find('button[data-brush-medium]')
@@ -118,9 +138,9 @@ describe('components/drawing', () => {
   })
 
   it('can switch to medium brush', async () => {
-    const props = generateProps()
+    const storeModule = createStoreModule()
     const data = () => ({ brushSize: 'small' })
-    const wrapper = createWrapper(Drawing, props, data)
+    const wrapper = createWrapper(Drawing, storeModule, data)
 
     const smallBrush = wrapper.find('button[data-brush-small]')
     const mediumBrush = wrapper.find('button[data-brush-medium]')
@@ -139,9 +159,9 @@ describe('components/drawing', () => {
   })
 
   it('can switch to large brush', async () => {
-    const props = generateProps()
+    const storeModule = createStoreModule()
     const data = () => ({ brushSize: 'medium' })
-    const wrapper = createWrapper(Drawing, props, data)
+    const wrapper = createWrapper(Drawing, storeModule, data)
 
     const smallBrush = wrapper.find('button[data-brush-small]')
     const mediumBrush = wrapper.find('button[data-brush-medium]')
@@ -160,19 +180,19 @@ describe('components/drawing', () => {
   })
 
   it('can update canvas with input value', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Drawing, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
+    expect(wrapper).toBeTruthy()
 
-    props.value = '{"aaa": "bbb"}'
-    wrapper.setProps(props)
+    storeModule.room.state.jsonCanvas = '{"aaa": "bbb"}'
     await flushPromises()
 
-    expect(wrapper.emitted('input')).toBeFalsy()
+    expect(storeModule.room.actions.shareCanvas).not.toHaveBeenCalled()
   })
 
   it('can update canvas on mouse click', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Drawing, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
 
     const canvas = wrapper.find('canvas')
 
@@ -184,8 +204,10 @@ describe('components/drawing', () => {
     await flushPromises()
 
     setTimeout(() => {
-      expect(wrapper.emitted('input')?.length).toBe(1)
-      const canvasState = JSON.parse(wrapper.emitted('input')?.[0][0])
+      expect(storeModule.room.actions.shareCanvas).toHaveBeenCalled()
+      const canvasState = JSON.parse(
+        storeModule.room.actions.shareCanvas.mock.calls[0][1]
+      )
       expect(canvasState.version).toBeTruthy()
       expect(canvasState.objects).toStrictEqual([])
     }, 100)

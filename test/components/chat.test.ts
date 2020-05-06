@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Buefy from 'buefy'
 import faker from 'faker'
@@ -7,12 +8,47 @@ import Chat from '~/components/Chat.vue'
 
 faker.seed(1234)
 
-function createWrapper(
-  component: Vue.VueConstructor<Vue>,
-  optionalProps?: object
-) {
+function generateMessages() {
+  const messages = []
+  for (let i = 0; i < 4; ++i) {
+    messages.push({
+      username: faker.internet.userName(),
+      content: faker.lorem.sentence(),
+      datetime: faker.date.recent().toISOString(),
+    })
+  }
+
+  return messages
+}
+
+function createStoreModule() {
+  return {
+    room: {
+      namespaced: true,
+      state: {
+        chatMessages: generateMessages(),
+      },
+      actions: {
+        sendChatMessage: jest.fn(),
+      },
+    },
+  }
+}
+
+function createStore(modules = {}) {
+  return new Vuex.Store({
+    modules: {
+      ...modules,
+    },
+  })
+}
+
+function createWrapper(component: Vue.VueConstructor<Vue>, storeModules = {}) {
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   localVue.use(Buefy)
+
+  const store = createStore(storeModules)
 
   const mocks = {
     $t: (msg: string) => msg,
@@ -23,44 +59,24 @@ function createWrapper(
 
   return mount(component, {
     localVue,
+    store,
     mocks,
     stubs,
-    propsData: optionalProps,
   })
-}
-
-function generateMessage() {
-  return {
-    socketid: faker.random.alphaNumeric(),
-    username: faker.internet.userName(),
-    content: faker.lorem.sentence(),
-    datetime: faker.date.recent().toISOString(),
-  }
-}
-
-function generateProps() {
-  const messages = []
-  for (let i = 0; i < 4; ++i) {
-    messages.push(generateMessage())
-  }
-
-  return {
-    messages,
-  }
 }
 
 describe('components/chat', () => {
   it('is a Vue instance', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
 
   it('can display messages in given order', () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
 
-    props.messages.forEach((m, i) => {
+    storeModule.room.state.chatMessages.forEach((m, i) => {
       const msgComp = wrapper.find(`article[data-message=message-${i}]`)
 
       const username = msgComp.find('.content > p > strong')
@@ -75,8 +91,8 @@ describe('components/chat', () => {
   })
 
   it('can send a new message with return key', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
 
     const newMessage = faker.lorem.sentence()
     const input = wrapper.find('input')
@@ -86,13 +102,15 @@ describe('components/chat', () => {
     input.trigger('keyup.enter')
     await flushPromises()
 
-    expect(wrapper.emitted('new-message')?.length).toBe(1)
-    expect(wrapper.emitted('new-message')?.[0][0]).toEqual(newMessage)
+    expect(storeModule.room.actions.sendChatMessage).toHaveBeenCalledWith(
+      expect.anything(),
+      newMessage
+    )
   })
 
   it('cannot send an empty message with return key', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
 
     const newMessage = ''
     const input = wrapper.find('input')
@@ -106,8 +124,8 @@ describe('components/chat', () => {
   })
 
   it('can send a new message with button', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
 
     const newMessage = faker.lorem.sentence()
     const input = wrapper.find('input')
@@ -123,13 +141,15 @@ describe('components/chat', () => {
     await flushPromises()
     expect(button.attributes('disabled')).toBe('disabled')
 
-    expect(wrapper.emitted('new-message')?.length).toBe(1)
-    expect(wrapper.emitted('new-message')?.[0][0]).toEqual(newMessage)
+    expect(storeModule.room.actions.sendChatMessage).toHaveBeenCalledWith(
+      expect.anything(),
+      newMessage
+    )
   })
 
   it('cannot send an empty message with button', async () => {
-    const props = generateProps()
-    const wrapper = createWrapper(Chat, props)
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Chat, storeModule)
 
     const newMessage = ''
     const input = wrapper.find('input')

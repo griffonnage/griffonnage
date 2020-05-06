@@ -25,7 +25,7 @@ function createWrapper(component: Vue.VueConstructor<Vue>) {
 }
 
 describe('pages/index', () => {
-  test('is a Vue instance', () => {
+  it('is a Vue instance', () => {
     const wrapper = createWrapper(Index)
     expect(wrapper.isVueInstance()).toBeTruthy()
   })
