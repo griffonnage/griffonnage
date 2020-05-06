@@ -32,19 +32,17 @@ interface RoomData {
   payload: any
 }
 
-export interface User {
+interface User {
   id: string
   username?: string
   me: boolean
 }
 
-export interface ChatMessage {
+interface ChatMessage {
   username: string
   content: string
   datetime: Date
 }
-
-let socket = undefined as io.Socket | undefined
 
 export const defaultState = {
   room: '',
@@ -70,7 +68,7 @@ export const mutations: MutationTree<RoomState> = {
     state: RoomState,
     { room, encryptionKey }: { room: string; encryptionKey: string }
   ): void => {
-    if (room !== state.room) {
+    if (room !== state.room || encryptionKey !== state.encryptionKey) {
       state.users = []
       state.chatMessages = []
       state.canvas = ''
@@ -78,6 +76,7 @@ export const mutations: MutationTree<RoomState> = {
     }
     state.room = room
     state.encryptionKey = encryptionKey
+    state.connected = false
   },
 
   setConnected: (state: RoomState, connected: boolean): void => {
@@ -123,28 +122,31 @@ export const actions: ActionTree<RoomState, RootState> = {
   ): void {
     commit('setRoom', { room, encryptionKey })
 
-    socket = io.createSocket()
-    socket.on(ListenEvent.connect, () => dispatch('connectHandler', true))
-    socket.on(ListenEvent.disconnect, () => dispatch('connectHandler', false))
-    socket.on(ListenEvent.userList, (users: string[]) =>
-      dispatch('userListHandler', users)
-    )
-    socket.on(ListenEvent.userJoin, (user: string) =>
-      dispatch('userJoinHandler', user)
-    )
-    socket.on(ListenEvent.userLeave, (user: string) =>
-      dispatch('userLeaveHandler', user)
-    )
-    socket.on(ListenEvent.newRoomData, (data: any) =>
-      dispatch('dataHandler', data)
-    )
+    const socket = io.createSocket()
+    if (socket) {
+      socket.on(ListenEvent.connect, () => dispatch('connectHandler', true))
+      socket.on(ListenEvent.disconnect, () => dispatch('connectHandler', false))
+      socket.on(ListenEvent.userList, (users: string[]) =>
+        dispatch('userListHandler', users)
+      )
+      socket.on(ListenEvent.userJoin, (user: string) =>
+        dispatch('userJoinHandler', user)
+      )
+      socket.on(ListenEvent.userLeave, (user: string) =>
+        dispatch('userLeaveHandler', user)
+      )
+      socket.on(ListenEvent.newRoomData, (data: any) =>
+        dispatch('dataHandler', data)
+      )
+    }
   },
 
   disconnect({ state }): void {
+    const socket = io.getSocket()
     if (socket) {
       socket.emit(EmitEvent.leaveRoom, state.room)
       socket.close()
-      socket = undefined
+      io.clearSocket()
     }
   },
 
@@ -159,6 +161,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   sayHi({ dispatch, state }): void {
+    const socket = io.getSocket()
     const hiData = {
       event: RoomEvent.hi,
       userid: socket?.id,
@@ -171,6 +174,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   sendChatMessage({ dispatch, state }, newMessage: string): void {
+    const socket = io.getSocket()
     const chatMessageData = {
       event: RoomEvent.chatMessage,
       userid: socket?.id,
@@ -186,6 +190,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   shareCanvas({ commit, dispatch }, canvas: string): void {
+    const socket = io.getSocket()
     const canvasData = {
       event: RoomEvent.canvas,
       userid: socket?.id,
@@ -198,6 +203,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   sendRoomData({ state }, data: any): void {
+    const socket = io.getSocket()
     if (socket) {
       const encryptedData = crypto.encrypt(data, state.encryptionKey)
       socket.emit(EmitEvent.broadcastRoomData, state.room, encryptedData)
@@ -205,6 +211,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   sendVolatileRoomData({ state }, data: any): void {
+    const socket = io.getSocket()
     if (socket) {
       const encryptedData = crypto.encrypt(data, state.encryptionKey)
       socket.emit(
@@ -216,6 +223,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   connectHandler({ commit, state }, connected: boolean): void {
+    const socket = io.getSocket()
     commit('setConnected', connected)
     if (state.room && state.connected && socket) {
       socket.emit(EmitEvent.joinRoom, state.room)
@@ -223,6 +231,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
 
   userListHandler({ commit, dispatch }, users: string[]): void {
+    const socket = io.getSocket()
     const usersList = users.map((u: string) => ({
       id: u,
       username: '',

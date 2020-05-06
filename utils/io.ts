@@ -1,9 +1,20 @@
 import io from 'socket.io-client'
 
-const syncUrl = process.env.SYNC_URL || ''
-
 export type Socket = SocketIOClient.Socket
 
+const syncUrl = process.env.SYNC_URL || ''
+
+let socket = undefined as Socket | undefined
+
 export function createSocket(): Socket {
-  return io(syncUrl)
+  socket = io(syncUrl)
+  return socket
+}
+
+export function clearSocket(): void {
+  socket = undefined
+}
+
+export function getSocket(): Socket | undefined {
+  return socket
 }
