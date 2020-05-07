@@ -77,7 +77,7 @@ export default {
   },
 
   join: {
-    secureLink: 'Cette connection est sécurisé par chiffrement bout-en-bout',
+    secureLink: 'Cette connexion est sécurisée par chiffrement bout-en-bout',
     linkCopied: 'Lien copié dans le presse-papier',
   },
 
