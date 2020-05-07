@@ -8,6 +8,7 @@
       <div class="level-item">
         <div class="field">
           <b-button
+            :title="$t('drawing.cleanup')"
             icon-pack="fas"
             icon-left="broom"
             size="is-large"
@@ -17,6 +18,7 @@
           />
 
           <b-button
+            :title="$t('drawing.cut')"
             icon-pack="fas"
             icon-left="cut"
             size="is-large"
@@ -27,6 +29,22 @@
           />
 
           <b-button
+            :title="$t('drawing.fill')"
+            icon-pack="fas"
+            icon-left="fill-drip"
+            size="is-large"
+            type="is-primary"
+            :disabled="freeDrawing"
+            data-control-fill
+            @click="fillSelection"
+          />
+        </div>
+      </div>
+
+      <div class="level-item">
+        <div class="field">
+          <b-button
+            :title="$t('drawing.selection')"
             icon-pack="fas"
             icon-left="vector-square"
             size="is-large"
@@ -37,6 +55,7 @@
           />
 
           <b-button
+            :title="$t('drawing.drawing')"
             icon-pack="fas"
             icon-left="pencil-alt"
             size="is-large"
@@ -51,6 +70,7 @@
       <div class="level-item">
         <div class="field">
           <b-button
+            :title="$t('drawing.smallBrush')"
             icon-pack="fas"
             icon-left="circle-notch"
             size="is-large"
@@ -61,6 +81,7 @@
           />
 
           <b-button
+            :title="$t('drawing.mediumBrush')"
             icon-pack="fas"
             icon-left="dot-circle"
             size="is-large"
@@ -71,6 +92,7 @@
           />
 
           <b-button
+            :title="$t('drawing.largeBrush')"
             icon-pack="fas"
             icon-left="circle"
             size="is-large"
@@ -186,6 +208,18 @@ export default Vue.extend({
             this.fabric.remove(o)
           }
         })
+      }
+    },
+
+    fillSelection(): void {
+      if (this.fabric && !this.freeDrawing) {
+        const objects = this.fabric.getActiveObjects()
+        objects.forEach((o) => {
+          if (this.fabric) {
+            o.set('fill', this.brushColor)
+          }
+        })
+        this.fabric.renderAll()
       }
     },
 

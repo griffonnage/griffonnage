@@ -38,7 +38,9 @@ function createWrapper(
 
   const store = createStore(storeModules)
 
-  const mocks = {}
+  const mocks = {
+    $t: (msg: string) => msg,
+  }
 
   const stubs = {
     'v-swatches': true,
@@ -83,10 +85,12 @@ describe('components/drawing', () => {
     const wrapper = createWrapper(Drawing, storeModule)
 
     const cut = wrapper.find('button[data-control-cut]')
+    const fill = wrapper.find('button[data-control-fill]')
     const selection = wrapper.find('button[data-control-selection]')
     const drawing = wrapper.find('button[data-control-drawing]')
 
     expect(cut.attributes('disabled')).toBe('disabled')
+    expect(fill.attributes('disabled')).toBe('disabled')
     expect(selection.attributes('disabled')).toBeUndefined()
     expect(drawing.attributes('disabled')).toBe('disabled')
 
@@ -94,6 +98,7 @@ describe('components/drawing', () => {
     await flushPromises()
 
     expect(cut.attributes('disabled')).toBeUndefined()
+    expect(fill.attributes('disabled')).toBeUndefined()
     expect(selection.attributes('disabled')).toBe('disabled')
     expect(drawing.attributes('disabled')).toBeUndefined()
   })
@@ -103,15 +108,21 @@ describe('components/drawing', () => {
     const data = () => ({ freeDrawing: false })
     const wrapper = createWrapper(Drawing, storeModule, data)
 
+    const cut = wrapper.find('button[data-control-cut]')
+    const fill = wrapper.find('button[data-control-fill]')
     const selection = wrapper.find('button[data-control-selection]')
     const drawing = wrapper.find('button[data-control-drawing]')
 
+    expect(cut.attributes('disabled')).toBeUndefined()
+    expect(fill.attributes('disabled')).toBeUndefined()
     expect(selection.attributes('disabled')).toBe('disabled')
     expect(drawing.attributes('disabled')).toBeUndefined()
 
     drawing.trigger('click')
     await flushPromises()
 
+    expect(cut.attributes('disabled')).toBe('disabled')
+    expect(fill.attributes('disabled')).toBe('disabled')
     expect(selection.attributes('disabled')).toBeUndefined()
     expect(drawing.attributes('disabled')).toBe('disabled')
   })

@@ -91,4 +91,15 @@ export default {
     me: 'Moi',
     anonymous: 'Utilisateur Anonyme',
   },
+
+  drawing: {
+    cleanup: 'Nettoyer le canvas',
+    cut: 'Supprimmer la selection',
+    fill: 'Remplire la selection',
+    selection: 'Selection',
+    drawing: 'Dessin',
+    smallBrush: 'Trait fin',
+    mediumBrush: 'Trait moyen',
+    largeBrush: 'Trait large',
+  },
 }
