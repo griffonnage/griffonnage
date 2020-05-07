@@ -62,7 +62,7 @@
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
     "@types/vuelidate": "^0.7.13",
-    "@vue/test-utils": "^1.0.0-beta.33",
+    "@vue/test-utils": "^1.0.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^24.1.0",
     "eslint": "^6.1.0",
