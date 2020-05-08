@@ -33,6 +33,8 @@ function createStoreModule() {
       namespaced: true,
       state: {
         connected: false,
+        canvas: '',
+        jsonCanvas: '',
       },
       actions: {
         connect: jest.fn(),

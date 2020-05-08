@@ -209,7 +209,13 @@ export default Vue.extend({
     loadCanvas(canvas: string): void {
       if (this.fabric) {
         this.loadingCanvasState = true
-        this.fabric.loadFromJSON(canvas, () => {})
+
+        if (canvas.length === 0) {
+          this.clearCanvas()
+        } else {
+          this.fabric.loadFromJSON(canvas, () => {})
+        }
+
         this.loadingCanvasState = false
       }
     },

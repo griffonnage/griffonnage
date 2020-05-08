@@ -68,7 +68,9 @@ export const mutations: MutationTree<RoomState> = {
     state: RoomState,
     { room, encryptionKey }: { room: string; encryptionKey: string }
   ): void => {
-    if (room !== state.room || encryptionKey !== state.encryptionKey) {
+    if (room === state.room && encryptionKey === state.encryptionKey) {
+      state.jsonCanvas = state.canvas
+    } else {
       state.users = []
       state.chatMessages = []
       state.canvas = ''
@@ -282,5 +284,6 @@ export const actions: ActionTree<RoomState, RootState> = {
 
   handleCanvasData({ commit }, data: RoomData): void {
     commit('setJsonCanvas', data.payload.canvas)
+    commit('setCanvas', data.payload.canvas)
   },
 }

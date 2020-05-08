@@ -51,8 +51,8 @@ function generateState() {
     users: generateUsers(),
     username: generateUsername(),
     chatMessages: generateMessages(),
-    canvas: '',
-    jsonCanvas: '',
+    canvas: '{"aaa": "bbb"}',
+    jsonCanvas: '{"aaa": "ccc"}',
   }
 }
 
@@ -119,6 +119,18 @@ describe('store/auth mutations', () => {
     room.mutations.setUsers(state, newUsers)
 
     expect(state.users).toStrictEqual(newUsers)
+  })
+
+  test('set user username', () => {
+    const state = generateState()
+    const newUsername = generateUsername()
+
+    room.mutations.setUserUsername(state, {
+      id: state.users[1].id,
+      username: newUsername,
+    })
+
+    expect(state.users[1].username).toEqual(newUsername)
   })
 
   test('set username', () => {
@@ -537,5 +549,6 @@ describe('store/room actions', () => {
 
     expect(result).toBeUndefined()
     expect(commit).toHaveBeenCalledWith('setJsonCanvas', newData.payload.canvas)
+    expect(commit).toHaveBeenCalledWith('setCanvas', newData.payload.canvas)
   })
 })
