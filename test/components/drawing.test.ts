@@ -190,6 +190,29 @@ describe('components/drawing', () => {
     expect(largeBrush.attributes('disabled')).toBe('disabled')
   })
 
+  it('can fill background with current color', async () => {
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
+
+    const fill = wrapper.find('button[data-control-fill]')
+    const selection = wrapper.find('button[data-control-selection]')
+
+    selection.trigger('click')
+    await flushPromises()
+
+    fill.trigger('click')
+    await flushPromises()
+
+    setTimeout(() => {
+      expect(storeModule.room.actions.shareCanvas).toHaveBeenCalled()
+      const canvasState = JSON.parse(
+        storeModule.room.actions.shareCanvas.mock.calls[0][1]
+      )
+      expect(canvasState.version).toBeTruthy()
+      expect(canvasState.objects).toStrictEqual([])
+    }, 100)
+  })
+
   it('can update canvas with input value', async () => {
     const storeModule = createStoreModule()
     const wrapper = createWrapper(Drawing, storeModule)

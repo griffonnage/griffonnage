@@ -242,16 +242,20 @@ export default Vue.extend({
         const objects = this.fabric.getActiveObjects()
 
         if (objects.length === 0) {
-          this.fabric.backgroundColor = this.brushColor
+          this.fabric.setBackgroundColor(this.brushColor, () => {
+            if (this.fabric) {
+              this.fabric.renderAll()
+              this.canvasChangedEvent()
+            }
+          })
         } else {
           objects.forEach((o) => {
             if (this.fabric) {
               o.set('fill', this.brushColor)
             }
           })
+          this.fabric.renderAll()
         }
-
-        this.fabric.renderAll()
       }
     },
 
