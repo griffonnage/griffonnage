@@ -28,6 +28,11 @@ export default {
       name: 'AGPL-3',
       url: 'https://github.com/griffonnage/griffonnage/blob/master/LICENSE',
     },
+    changelog: {
+      name: 'Changelog',
+      url:
+        'https://github.com/griffonnage/griffonnage/blob/master/CHANGELOG.md',
+    },
   },
   links: {
     nuxt: {

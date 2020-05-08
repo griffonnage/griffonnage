@@ -91,7 +91,11 @@
         {{ $t('credits.copyright.owner') }}
       </p>
 
-      <p>{{ $t('credits.version') }} {{ appVersion }}</p>
+      <p>
+        <a :href="changelog.url" :title="changelog.name" :alt="changelog.name">
+          {{ $t('credits.version') }} {{ appVersion }}
+        </a>
+      </p>
     </div>
   </footer>
 </template>
@@ -106,6 +110,7 @@ export default Vue.extend({
       author: this.$t('common.app.author'),
       repository: this.$t('common.app.repository'),
       license: this.$t('common.app.license'),
+      changelog: this.$t('common.app.changelog'),
       nuxt: this.$t('common.links.nuxt'),
       fabricjs: this.$t('common.links.fabricjs'),
       socketio: this.$t('common.links.socketio'),
