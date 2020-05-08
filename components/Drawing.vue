@@ -106,7 +106,13 @@
     </div>
 
     <div class="has-text-centered">
-      <v-swatches v-model="brushColor" inline @input="brushColorChanged" />
+      <v-swatches
+        v-model="brushColor"
+        :swatches="swatches"
+        inline
+        show-border
+        @input="brushColorChanged"
+      />
     </div>
   </div>
 </template>
@@ -128,7 +134,21 @@ export default Vue.extend({
       canvas: null as HTMLCanvasElement | null,
       fabric: null as fabric.Canvas | null,
       freeDrawing: true,
-      brushColor: '#3398DB',
+      swatches: [
+        '#1FBC9C',
+        '#2ECC70',
+        '#3398DB',
+        '#8E43AD',
+        '#F2C511',
+        '#F39C19',
+        '#E84B3C',
+        '#FFCCD5',
+        '#DDE6E8',
+        '#222F3D',
+        '#FFFFFF',
+        '',
+      ],
+      brushColor: '#222F3D',
       brushSize: 'medium' as 'small' | 'medium' | 'large',
       loadingCanvasState: false,
     }
