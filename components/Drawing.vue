@@ -214,11 +214,17 @@ export default Vue.extend({
     fillSelection(): void {
       if (this.fabric && !this.freeDrawing) {
         const objects = this.fabric.getActiveObjects()
-        objects.forEach((o) => {
-          if (this.fabric) {
-            o.set('fill', this.brushColor)
-          }
-        })
+
+        if (objects.length === 0) {
+          this.fabric.backgroundColor = this.brushColor
+        } else {
+          objects.forEach((o) => {
+            if (this.fabric) {
+              o.set('fill', this.brushColor)
+            }
+          })
+        }
+
         this.fabric.renderAll()
       }
     },
