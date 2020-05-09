@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueSwatches from 'vue-swatches'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Buefy from 'buefy'
 import flushPromises from 'flush-promises'
@@ -35,6 +36,7 @@ function createWrapper(
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(Buefy)
+  localVue.component('v-swatches', VueSwatches)
 
   const store = createStore(storeModules)
 
@@ -42,9 +44,7 @@ function createWrapper(
     $t: (msg: string) => msg,
   }
 
-  const stubs = {
-    'v-swatches': true,
-  }
+  const stubs = {}
 
   return mount(component, {
     localVue,
@@ -211,6 +211,35 @@ describe('components/drawing', () => {
       expect(canvasState.version).toBeTruthy()
       expect(canvasState.objects).toStrictEqual([])
     }, 100)
+  })
+
+  it('can change color swatches', async () => {
+    const storeModule = createStoreModule()
+    const wrapper = createWrapper(Drawing, storeModule)
+
+    const swatches = wrapper.findAll('.vue-swatches__swatch')
+    expect(swatches.length).toBe(12)
+
+    const defaultSwatch = wrapper.find(
+      'div.vue-swatches__swatch[aria-label="#222F3D"]'
+    )
+    const defaultSwatchCheck = defaultSwatch.find(
+      '.vue-swatches__check__wrapper'
+    )
+
+    const targetSwatch = wrapper.find(
+      'div.vue-swatches__swatch[aria-label="#1FBC9C"]'
+    )
+    const targetSwatchCheck = targetSwatch.find('.vue-swatches__check__wrapper')
+
+    expect(defaultSwatchCheck.isVisible()).toBeTruthy()
+    expect(targetSwatchCheck.isVisible()).toBeFalsy()
+
+    targetSwatch.trigger('click')
+    await flushPromises()
+
+    expect(defaultSwatchCheck.isVisible()).toBeFalsy()
+    expect(targetSwatchCheck.isVisible()).toBeTruthy()
   })
 
   it('can update canvas with input value', async () => {

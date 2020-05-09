@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueSwatches from 'vue-swatches'
 import { createLocalVue, mount } from '@vue/test-utils'
 import Buefy from 'buefy'
 import faker from 'faker'
@@ -60,6 +61,7 @@ function createWrapper(
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(Buefy)
+  localVue.component('v-swatches', VueSwatches)
 
   const store = createStore(storeModules)
 
@@ -68,9 +70,7 @@ function createWrapper(
     ...optionalMocks,
   }
 
-  const stubs = {
-    'v-swatches': true,
-  }
+  const stubs = {}
 
   return mount(component, {
     localVue,
