@@ -6,8 +6,6 @@ describe('utils/usernames', () => {
     expect(name).toBeTruthy()
 
     const parts = name.split(' ')
-    expect(parts.length).toBe(2)
-    expect(usernames.adjectives.includes(parts[0])).toBeTruthy()
-    expect(usernames.names.includes(parts[1])).toBeTruthy()
+    expect(parts.length).toBeGreaterThanOrEqual(2)
   })
 })

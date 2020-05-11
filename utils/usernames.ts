@@ -1,4 +1,4 @@
-export const adjectives = [
+const adjectives = [
   'Amazing',
   'Angry',
   'Arrogant',
@@ -39,7 +39,7 @@ export const adjectives = [
   'Zen-master',
 ]
 
-export const names = [
+const names = [
   'Bob Ross',
   'Botticelli',
   'Braque',
