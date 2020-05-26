@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2020-05-26
+### Added
+- Some more tests
+
+### Changed
+- Cleanup features in homepage
+- Update and upgrade dependencies
+
 ## [0.1.6] - 2020-05-08
 ### Added
 - Local room state (username, canvas, chat messages)
@@ -53,7 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * End-to-end encryption of all the data
     * Basic instant chat messages
 
-[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.1.6...HEAD
+[Unreleased]: https://github.com/griffonnage/griffonnage/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/griffonnage/griffonnage/compare/0.1.6...0.2.0
 [0.1.6]: https://github.com/griffonnage/griffonnage/compare/0.1.5...0.1.6
 [0.1.5]: https://github.com/griffonnage/griffonnage/compare/0.1.4...0.1.5
 [0.1.4]: https://github.com/griffonnage/griffonnage/compare/0.1.3...0.1.4
