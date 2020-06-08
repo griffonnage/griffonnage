@@ -49,7 +49,7 @@
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
     "vue-clipboard2": "^0.3.1",
-    "vue-swatches": "^2.0.3",
+    "vue-swatches": "^2.1.0",
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
