@@ -53,7 +53,7 @@
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^1.0.1",
+    "@nuxt/typescript-build": "^1.0.2",
     "@nuxtjs/eslint-config-typescript": "^2.0.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@types/fabric": "^3.6.5",
