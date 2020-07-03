@@ -29,6 +29,8 @@ const sitemapUrl = `${hostname}${sitemapPath}`
 
 const config: Configuration = {
   mode: 'universal',
+  target: 'static',
+  telemetry: false,
 
   env: {
     APP_VERSION: appVersion,
@@ -57,6 +59,7 @@ const config: Configuration = {
 
   generate: {
     fallback: '200.html',
+    exclude: [/free\//],
   },
 
   plugins: ['~/plugins/clipboard.ts', '~/plugins/font-awesome.ts'],
