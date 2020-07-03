@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check dependencies
-        run: npm audit --production || true
+        run: npm audit --production || true
       - name: Check code lint
         run: npm run lint
       - name: Run tests
