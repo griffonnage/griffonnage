@@ -58,7 +58,7 @@ const config: Configuration = {
   },
 
   generate: {
-    fallback: '200.html',
+    fallback: '404.html',
     exclude: [/free\//],
   },
 
