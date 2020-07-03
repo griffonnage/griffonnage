@@ -2,8 +2,6 @@ import { Configuration } from '@nuxt/types'
 import { Event as SentryEvent } from '@sentry/types'
 import i18n from './i18n'
 
-require('dotenv').config()
-
 const appCommon = i18n.messages.en.common.app
 const appName = appCommon.name
 const appShortName = appCommon.shortName
@@ -65,7 +63,6 @@ const config: Configuration = {
   plugins: ['~/plugins/clipboard.ts', '~/plugins/font-awesome.ts'],
 
   buildModules: [
-    '@nuxtjs/dotenv',
     '@nuxt/typescript-build',
     '@nuxtjs/eslint-module',
     ['nuxt-cname-module', { baseUrl, generateCNAME: true }],
