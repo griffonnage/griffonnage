@@ -60,7 +60,7 @@
     "@types/fabric": "^3.6.8",
     "@types/faker": "^4.1.12",
     "@types/jest": "^26.0.5",
-    "@types/socket.io": "^2.1.9",
+    "@types/socket.io": "^2.1.10",
     "@types/socket.io-client": "^1.4.33",
     "@types/vuelidate": "^0.7.13",
     "@vue/test-utils": "^1.0.3",
