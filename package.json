@@ -37,7 +37,7 @@
     "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/robots": "^2.4.2",
-    "@nuxtjs/sentry": "^4.3.2",
+    "@nuxtjs/sentry": "^4.3.3",
     "@nuxtjs/sitemap": "^2.4.0",
     "fabric": "^3.6.3",
     "nuxt": "^2.14.0",
