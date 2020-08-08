@@ -115,9 +115,9 @@ jobs:
     if: contains(github.ref, 'master')
 
     env:
-      NOW_ORG_ID: ${{ secrets.NOW_ORG_ID }}
-      NOW_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
-      NOW_TOKEN: ${{ secrets.NOW_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.NOW_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.NOW_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -126,8 +126,8 @@ jobs:
         with:
           name: build-preview
           path: dist
-      - name: Deploy to Zeit Now
-        run: cd dist && now --confirm --token $NOW_TOKEN
+      - name: Deploy to Vercel
+        run: cd dist && vercel --confirm --token $VERCEL_TOKEN
 
   deploy-production:
     name: Deploy Production
@@ -136,9 +136,9 @@ jobs:
     if: contains(github.ref, 'tags')
 
     env:
-      NOW_ORG_ID: ${{ secrets.NOW_ORG_ID }}
-      NOW_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
-      NOW_TOKEN: ${{ secrets.NOW_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.NOW_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.NOW_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.NOW_TOKEN }}
 
     steps:
       - uses: actions/checkout@v2
@@ -147,5 +147,5 @@ jobs:
         with:
           name: build-production
           path: dist
-      - name: Deploy to Zeit Now
-        run: cd dist && now --prod --confirm --token $NOW_TOKEN
+      - name: Deploy to Vercel
+        run: cd dist && vercel --prod --confirm --token $VERCEL_TOKEN
