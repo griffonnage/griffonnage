@@ -78,7 +78,7 @@
     "jest-junit": "^11.1.0",
     "node-sass": "^4.14.1",
     "nuxt-cname-module": "^1.1.1",
-    "prettier": "^2.0.5",
+    "prettier": "^2.1.0",
     "sass-loader": "^9.0.3",
     "ts-jest": "^26.2.0",
     "vue-jest": "^3.0.6"
