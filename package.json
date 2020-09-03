@@ -40,7 +40,7 @@
     "@nuxtjs/sitemap": "^2.4.0",
     "fabric": "^4.1.0",
     "nuxt": "^2.14.4",
-    "nuxt-buefy": "^0.4.2",
+    "nuxt-buefy": "^0.4.3",
     "nuxt-chiffre": "^0.3.0",
     "nuxt-i18n": "^6.13.12",
     "socket.io": "^2.3.0",
