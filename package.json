@@ -81,7 +81,7 @@
     "prettier": "^2.1.1",
     "sass-loader": "^10.0.2",
     "ts-jest": "^26.3.0",
-    "vue-jest": "^3.0.6"
+    "vue-jest": "^3.0.7"
   },
   "engines": {
     "node": "^12.18.3",
