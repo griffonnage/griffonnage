@@ -55,7 +55,7 @@
     "@nuxt/types": "^2.14.6",
     "@nuxt/typescript-build": "^2.0.3",
     "@nuxtjs/eslint-config-typescript": "^3.0.0",
-    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/eslint-module": "^3.0.0",
     "@types/fabric": "^3.6.8",
     "@types/faker": "^5.1.2",
     "@types/jest": "^26.0.14",
