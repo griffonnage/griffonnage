@@ -1,4 +1,4 @@
-import { Configuration } from '@nuxt/types'
+import { NuxtConfig } from '@nuxt/types'
 import { Event as SentryEvent } from '@sentry/types'
 import i18n from './i18n'
 
@@ -25,8 +25,7 @@ const hostname = `${baseProtocol}://${baseUrl}${staticPrefix}`
 const sitemapPath = '/sitemap.xml'
 const sitemapUrl = `${hostname}${sitemapPath}`
 
-const config: Configuration = {
-  mode: 'universal',
+const config: NuxtConfig = {
   target: 'static',
   telemetry: false,
 
