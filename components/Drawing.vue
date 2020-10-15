@@ -11,7 +11,7 @@
             :title="$t('drawing.cleanup')"
             icon-pack="fas"
             icon-left="broom"
-            size="is-large"
+            size="is-medium"
             type="is-danger"
             data-control-clear
             @click="clearCanvas"
@@ -21,7 +21,7 @@
             :title="$t('drawing.cut')"
             icon-pack="fas"
             icon-left="cut"
-            size="is-large"
+            size="is-medium"
             type="is-warning"
             :disabled="freeDrawing"
             data-control-cut
@@ -32,7 +32,7 @@
             :title="$t('drawing.fill')"
             icon-pack="fas"
             icon-left="fill-drip"
-            size="is-large"
+            size="is-medium"
             type="is-primary"
             :disabled="freeDrawing"
             data-control-fill
@@ -47,7 +47,7 @@
             :title="$t('drawing.selection')"
             icon-pack="fas"
             icon-left="vector-square"
-            size="is-large"
+            size="is-medium"
             type="is-info"
             :disabled="!freeDrawing"
             data-control-selection
@@ -58,7 +58,7 @@
             :title="$t('drawing.drawing')"
             icon-pack="fas"
             icon-left="pencil-alt"
-            size="is-large"
+            size="is-medium"
             type="is-info"
             :disabled="freeDrawing"
             data-control-drawing
@@ -73,7 +73,7 @@
             :title="$t('drawing.smallBrush')"
             icon-pack="fas"
             icon-left="circle-notch"
-            size="is-large"
+            size="is-medium"
             type="is-dark"
             :disabled="brushSize === 'small'"
             data-brush-small
@@ -84,7 +84,7 @@
             :title="$t('drawing.mediumBrush')"
             icon-pack="fas"
             icon-left="dot-circle"
-            size="is-large"
+            size="is-medium"
             type="is-dark"
             :disabled="brushSize === 'medium'"
             data-brush-medium
@@ -95,7 +95,7 @@
             :title="$t('drawing.largeBrush')"
             icon-pack="fas"
             icon-left="circle"
-            size="is-large"
+            size="is-medium"
             type="is-dark"
             :disabled="brushSize === 'large'"
             data-brush-large

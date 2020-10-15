@@ -3,12 +3,7 @@
     <p class="control">
       <b-tooltip :label="$t('join.secureLink')" type="is-dark">
         <span class="button is-static">
-          <b-icon
-            pack="fas"
-            icon="shield-alt"
-            type="is-success"
-            size="is-small"
-          />
+          <b-icon pack="fas" icon="shield-alt" type="is-success" />
         </span>
       </b-tooltip>
     </p>
