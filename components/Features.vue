@@ -5,7 +5,7 @@
         <div class="columns">
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="pencil-alt" size="is-medium" />
+              <b-icon pack="fas" icon="pencil-alt" />
               {{ $t('features.drawing.title') }}
             </p>
 
@@ -24,7 +24,7 @@
 
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="comments" size="is-medium" />
+              <b-icon pack="fas" icon="comments" />
               {{ $t('features.messaging.title') }}
             </p>
 
@@ -43,7 +43,7 @@
 
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="users" size="is-medium" />
+              <b-icon pack="fas" icon="users" />
               {{ $t('features.p2p.title') }}
             </p>
 
@@ -64,7 +64,7 @@
         <div class="columns">
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="shield-alt" size="is-medium" />
+              <b-icon pack="fas" icon="shield-alt" />
               {{ $t('features.privacy.title') }}
             </p>
 
@@ -83,7 +83,7 @@
 
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="lock-open" size="is-medium" />
+              <b-icon pack="fas" icon="lock-open" />
               {{ $t('features.oss.title') }}
             </p>
 
@@ -112,7 +112,7 @@
 
           <div class="column is-one-third">
             <p class="title">
-              <b-icon pack="fas" icon="envelope-open-text" size="is-medium" />
+              <b-icon pack="fas" icon="envelope-open-text" />
               {{ $t('features.suggestions.title') }}
             </p>
 
