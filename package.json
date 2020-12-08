@@ -58,7 +58,7 @@
     "@nuxtjs/eslint-module": "^3.0.1",
     "@types/fabric": "^3.6.9",
     "@types/faker": "^5.1.5",
-    "@types/jest": "^26.0.16",
+    "@types/jest": "^26.0.17",
     "@types/socket.io": "^2.1.12",
     "@types/socket.io-client": "^1.4.34",
     "@types/vuelidate": "^0.7.13",
