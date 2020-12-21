@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="content has-text-centered heading">
       <i18n path="credits.made" tag="p">
-        <template v-slot:author>
+        <template #author>
           <a :href="author.url" :title="author.name" :alt="author.name">
             <span>{{ author.name }}</span>
           </a>
@@ -10,31 +10,31 @@
       </i18n>
 
       <i18n path="credits.powered" tag="p">
-        <template v-slot:nuxt>
+        <template #nuxt>
           <a :href="nuxt.url" :title="nuxt.name" :alt="nuxt.name">
             <span>{{ nuxt.name }}</span>
           </a>
         </template>
 
-        <template v-slot:fabricjs>
+        <template #fabricjs>
           <a :href="fabricjs.url" :title="fabricjs.name" :alt="fabricjs.name">
             <span>{{ fabricjs.name }}</span>
           </a>
         </template>
 
-        <template v-slot:socketio>
+        <template #socketio>
           <a :href="socketio.url" :title="socketio.name" :alt="socketio.name">
             <span>{{ socketio.name }}</span>
           </a>
         </template>
 
-        <template v-slot:bulma>
+        <template #bulma>
           <a :href="bulma.url" :title="bulma.name" :alt="bulma.name">
             <span>{{ bulma.name }}</span>
           </a>
         </template>
 
-        <template v-slot:fontawesome>
+        <template #fontawesome>
           <a
             :href="fontawesome.url"
             :title="fontawesome.name"
@@ -46,7 +46,7 @@
       </i18n>
 
       <i18n path="credits.e2ee" tag="p">
-        <template v-slot:tweetnacljs>
+        <template #tweetnacljs>
           <a
             :href="tweetnacljs.url"
             :title="tweetnacljs.name"
@@ -58,7 +58,7 @@
       </i18n>
 
       <i18n path="credits.analytics" tag="p">
-        <template v-slot:chiffre>
+        <template #chiffre>
           <a :href="chiffre.url" :title="chiffre.name" :alt="chiffre.name">
             <span>{{ chiffre.name }}</span>
           </a>
@@ -68,7 +68,7 @@
       <br />
 
       <i18n path="credits.website" tag="p">
-        <template v-slot:license>
+        <template #license>
           <a :href="license.url" :title="license.name" :alt="license.name">
             <span>{{ license.name }}</span>
           </a>

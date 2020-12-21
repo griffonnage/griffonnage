@@ -36,6 +36,10 @@ export default Vue.extend({
     } as PropOptions<Error>,
   },
 
+  head() {
+    return this.$nuxtI18nSeo()
+  },
+
   computed: {
     statusCode(): number {
       return this.error.statusCode || 500
@@ -49,10 +53,6 @@ export default Vue.extend({
 
       return handlers.get(this.statusCode)
     },
-  },
-
-  head() {
-    return this.$nuxtI18nSeo()
   },
 })
 </script>

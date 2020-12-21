@@ -36,7 +36,7 @@ function createWrapper(
   const localVue = createLocalVue()
   localVue.use(Vuex)
   localVue.use(Buefy)
-  localVue.component('v-swatches', VueSwatches)
+  localVue.component('VSwatches', VueSwatches)
 
   const store = createStore(storeModules)
 

@@ -10,7 +10,7 @@
             </p>
 
             <i18n path="features.drawing.text" tag="p">
-              <template v-slot:fabricjs>
+              <template #fabricjs>
                 <a
                   :href="fabricjs.url"
                   :title="fabricjs.name"
@@ -29,7 +29,7 @@
             </p>
 
             <i18n path="features.messaging.text" tag="p">
-              <template v-slot:socketio>
+              <template #socketio>
                 <a
                   :href="socketio.url"
                   :title="socketio.name"
@@ -48,7 +48,7 @@
             </p>
 
             <i18n path="features.p2p.text" tag="p">
-              <template v-slot:socketio>
+              <template #socketio>
                 <a
                   :href="socketio.url"
                   :title="socketio.name"
@@ -69,7 +69,7 @@
             </p>
 
             <i18n path="features.privacy.text" tag="p">
-              <template v-slot:tweetnacljs>
+              <template #tweetnacljs>
                 <a
                   :href="tweetnacljs.url"
                   :title="tweetnacljs.name"
@@ -88,7 +88,7 @@
             </p>
 
             <i18n path="features.oss.text" tag="p">
-              <template v-slot:license>
+              <template #license>
                 <a
                   :href="license.url"
                   :title="license.name"
@@ -98,7 +98,7 @@
                 </a>
               </template>
 
-              <template v-slot:repository>
+              <template #repository>
                 <a
                   :href="repository.url"
                   :title="repository.name"
@@ -117,7 +117,7 @@
             </p>
 
             <i18n path="features.suggestions.text" tag="p">
-              <template v-slot:repository>
+              <template #repository>
                 <a
                   :href="repository.url"
                   :title="repository.name"
