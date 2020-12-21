@@ -1,6 +1,4 @@
-import io from 'socket.io-client'
-
-export type Socket = typeof io.Socket
+import { io, Socket } from 'socket.io-client'
 
 const syncUrl = process.env.SYNC_URL || ''
 
