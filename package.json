@@ -38,7 +38,7 @@
     "@nuxtjs/robots": "^2.4.2",
     "@nuxtjs/sentry": "^4.5.0",
     "@nuxtjs/sitemap": "^2.4.0",
-    "fabric": "^4.2.0",
+    "fabric": "^4.3.0",
     "nuxt": "^2.14.12",
     "nuxt-buefy": "^0.4.4",
     "nuxt-chiffre": "^0.3.0",
